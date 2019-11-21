@@ -34,14 +34,14 @@ class SignupScreen extends React.Component {
         <TextInput
           style={styles.textInput}
           placeholder="First Name"
-          onChangeText={(name) => this.setState({name})}
-          value={this.state.name}
+          onChangeText={(first_name) => this.setState({first_name})}
+          value={this.state.first_name}
         />
         <TextInput
           style={styles.textInput}
           placeholder="Last Name"
-          onChangeText={(name) => this.setState({name})}
-          value={this.state.name}
+          onChangeText={(last_name) => this.setState({last_name})}
+          value={this.state.last_name}
         />
         <TextInput
           style={styles.textInput}
@@ -56,7 +56,7 @@ class SignupScreen extends React.Component {
           value={this.state.password}
         />
         <View style={styles.textInput}>
-          <Picker style={styles.pickerStyle} selectedValue={this.state.role} onValueChange={(role) =>  this.setState({role})} >  
+          <Picker style={styles.pickerStyle} selectedValue={this.state.gender} onValueChange={(gender) =>  this.setState({gender})} >  
               <Picker.Item label="Gender" value={null} />  
               <Picker.Item label="male" value="male" />  
               <Picker.Item label="female" value="female" />  

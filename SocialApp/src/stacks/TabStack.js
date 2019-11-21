@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, } from 'react-native';
-import {HomeScreen} from '../containers/'
+import {HomeScreen, ProfileScreen} from '../containers/'
 import Feather from 'react-native-vector-icons/Feather';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
@@ -14,9 +14,18 @@ const TabsStack = createBottomTabNavigator({
       )
     }
   },
+  ProfileScreen: { screen: ProfileScreen,
+    navigationOptions : {
+      tabBarLabel: 'Profile',
+      labeled: true,
+      tabBarIcon: ({ tintColor }) => (
+        <Feather style={{marginTop:8}} name='user' size={16} color={tintColor}></Feather>
+      )
+    }
+  },
 },
   {
-    // initialRouteName: 'HomeScreen',
+    initialRouteName: 'HomeScreen',
     tabBarOptions: {
       activeTintColor: '#fff',
       inactiveTintColor:'#000',

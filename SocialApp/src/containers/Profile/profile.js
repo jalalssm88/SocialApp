@@ -4,7 +4,7 @@ import {View, Text, Image, AsyncStorage, FlatList } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 // import jwt_decode from 'jwt-decode';
 
-class HomeScreen extends React.Component {
+class ProfileScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -37,11 +37,11 @@ class HomeScreen extends React.Component {
       const {first_name, last_name} = this.state
       return (
         <View style={{width:'100%', paddingHorizontal:20}}>
-          <Text>Well come {first_name} {last_name} </Text>
+          <Text>Well come {first_name} {last_name} to your profile</Text>
         </View>
       );
     }
 }
 
 
-export default HomeScreen;
+export default ProfileScreen;
