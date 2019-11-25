@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Spinner } from 'native-base';
-import {View, Text, Image, AsyncStorage, FlatList, } from 'react-native';
+import {View, Text, Image, AsyncStorage, FlatList, TouchableOpacity, TouchableWithoutFeedback, Modal, Dimensions } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-// import jwt_decode from 'jwt-decode';
+const { height, width } = Dimensions.get("window");
 
 class ProfileScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       first_name:'',
-      last_name:''
+      last_name:'',
+      showModal:false,
     }
     this.getUser();
   }
@@ -32,17 +33,33 @@ class ProfileScreen extends React.Component {
         }
     })
 }
+
+    toggleModal = ()=> {
+      this.setState({
+        showModal:!this.state.showModal
+      })
+    }
     render() {
       console.log('current user', this.state.current_user)
       const {first_name, last_name} = this.state
       return (
         <View style={{width:'100%', paddingHorizontal:20, paddingTop:10}}>
           <View style={{width:'100%', height:250}}>
-            <Image source={{uri:"https://www.gstatic.com/webp/gallery/1.jpg"}} style={{height:250, width:'100%', borderRadius:10}} />
+            <TouchableWithoutFeedback onPress={this.toggleModal}>
+              <Image source={{uri:"https://www.gstatic.com/webp/gallery/1.jpg"}} style={{height:250, width:'100%', borderRadius:10}} />
+            </TouchableWithoutFeedback>
+            <View style={{height:30, width:40, backgroundColor:'white', borderRadius:5, position:'absolute', right:5, bottom:5, alignItems:'center', justifyContent:'center'}}>
+              <Image source={require('../../images/Camera.png')} style={{height:25, width:25}} />
+            </View>
           </View>
-          <View style={{alignItems:'center', justifyContent:'center', marginTop:-100}}>
-            <View style={{height:200, width:200, borderRadius:200,}}>
+          <View  style={{alignItems:'center', justifyContent:'center', marginTop:-100}}>
+            <TouchableOpacity onPress={this.toggleModal}>
+            <View  style={{height:200, width:200, borderRadius:200,}}>
               <Image source={{uri:"https://www.gstatic.com/webp/gallery/4.jpg"}} style={{height:200, width:200,borderRadius:200}} />
+            </View>
+            </TouchableOpacity>
+            <View  style={{height:40, width:40, borderRadius:50, position:'absolute', right:90, bottom:20,backgroundColor:'gray', alignItems:'center', justifyContent:'center',elevation:2}}>
+              <Image source={require('../../images/Camera.png')} style={{height:20, width:20}} />
             </View>
           </View>
           <View style={{width:"100%", height:70, alignItems:'center', justifyContent:'center',}}>
@@ -77,6 +94,23 @@ class ProfileScreen extends React.Component {
               </View>
             </View>
           </View>
+          <Modal
+            visible={this.state.showModal}
+            onRequestClose={this.toggleModal}
+            transparent>
+            <View style={{ height, width }} >
+              <TouchableOpacity activeOpacity={1} onPress={this.toggleModal} style={{ height: "50%", backgroundColor: "rgba(255,255,255,0.9)", width: "100%" }} >
+              </TouchableOpacity>
+              <View style={{ height: "50%", backgroundColor: "#8721FD", width: "100%", borderTopRightRadius: 20, borderTopLeftRadius: 20, justifyContent: "space-evenly", alignItems: "center", paddingHorizontal: 10 }} >
+                <View style={{ height: 8, width: 45, backgroundColor: "white", borderRadius: 8 }}></View>
+                <Text style={{ fontSize:18,fontFamily:'Montserrat-Regular',textAlign:"center",color:"#FFFFFF"}}>Choose From</Text>
+                <TouchableOpacity style={{width:"70%", height:50, backgroundColor: "white", color: "#8721FD", fontSize: 17, borderRadius:10, alignItems:'center', justifyContent:'center', flexDirection:'row'}}><Image style={{height:20, width:20}} source={require("../../images/Gallery.png")} /><Text style={{fontSize:16, marginLeft:10}}>Gallery</Text></TouchableOpacity>
+                {/* onPress={this.openGallery} */}
+                <Text style={{ fontSize:16,fontFamily:'Montserrat-Regular',textAlign:"center",color:"#FFFFFF"}}>OR</Text>
+                <TouchableOpacity style={{width:"70%", height:45, borderWidth:2, borderColor:'white', fontSize: 17, borderRadius:10, alignItems:'center', justifyContent:'center', flexDirection:'row'}}><Image  style={{height:20, width:20}} source={require("../../images/Camera_white.png")} /><Text style={{fontSize:16, marginLeft:10}}>Camera</Text></TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
         </View>
       );
     }
