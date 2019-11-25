@@ -31,12 +31,18 @@ class LoginScreen extends React.Component {
         })
     }
 
-    singUp =()=>{
+    login =()=>{
+      if(this.state.email !=="" && this.state.password !==""){
         this.props.loginUserData({email:this.state.email, password:this.state.password})
+      }
     }
 
     gotoSignup = () =>{
         this.props.navigation.navigate('SignupScreen')
+        this.setState({
+          email:'',
+          password:'',
+        })
     }
 
     render() {
@@ -57,10 +63,11 @@ class LoginScreen extends React.Component {
           <TextInput
               style={styles.textInput}
               placeholder="Password"
+              secureTextEntry={true}
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}
             />
-            <TouchableOpacity onPress={this.singUp} style={styles.buttons}>
+            <TouchableOpacity onPress={this.login} style={styles.buttons}>
               <Text style={{color:"white"}}>Login</Text>
             </TouchableOpacity>
             <Text style={{marginTop:50, marginBottom:10}}>Dont have account? </Text>

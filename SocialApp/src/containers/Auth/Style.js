@@ -69,10 +69,13 @@ export default StyleSheet.create({
         marginBottom: 8
       },
       imageIconStyle: {
+          marginTop:10,
         height: 30,
         width: 30,
         // top: 5,
-       alignItems:'flex-end'
+       position:"absolute",
+       left:320,
+       top:0
       },
  
 })

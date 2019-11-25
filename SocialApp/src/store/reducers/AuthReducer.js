@@ -21,11 +21,11 @@ function Reducer(state = INITIAL_STATE, action) {
 
         case AuthActions.LOGIN_USER_DATA:
             return{
-                ...state, isLoading:true
+                ...state,
             }
         case AuthActions.LOGIN_USER_DATA_SUCESS:
             return { 
-                ...state, currentUser: action.payload, isLoading:false 
+                ...state, currentUser: action.payload,
             };
         default:
             return state;

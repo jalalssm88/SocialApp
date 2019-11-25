@@ -7,6 +7,8 @@ import { AuthActions } from '../../store/actions/';
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment'
 import RNPickerSelect from 'react-native-picker-select';
+import Feather from 'react-native-vector-icons/Feather';
+
 
 
 class SignupScreen extends React.Component {
@@ -22,7 +24,9 @@ class SignupScreen extends React.Component {
     }
   }
   createUser = ()=>{
-    this.props.createUserData(this.state)
+    if(this.state.first_name !=="" && this.state.last_name !=="" && this.state.email !==""){
+      this.props.createUserData(this.state)
+    }
   }
 
   render() {
@@ -52,6 +56,7 @@ class SignupScreen extends React.Component {
         <TextInput
           style={styles.textInput}
           placeholder="Password"
+          secureTextEntry={true}
           onChangeText={(password) => this.setState({password})}
           value={this.state.password}
         />
@@ -62,7 +67,7 @@ class SignupScreen extends React.Component {
               <Picker.Item label="female" value="female" />  
           </Picker>  
         </View>
-        <View style={[styles.textInput, ]}>
+        <View style={[styles.textInput, {paddingTop:3} ]}>
               <DatePicker
                 style={styles.inputStyle}
                 date={this.state.date_of_birth}
@@ -102,7 +107,7 @@ class SignupScreen extends React.Component {
                   }
                 }
                 iconComponent={
-                  <Image style={styles.imageIconStyle} source={require('../../images/Calendar.png')}></Image>
+                  <Feather name="calendar" size={25} style={styles.imageIconStyle}></Feather>
                 }
                 onDateChange={(date_of_birth) => { this.setState({ date_of_birth }) }}
               />

@@ -12,26 +12,9 @@ class SettingScreen extends React.Component {
       first_name:'',
       last_name:''
     }
-    // this.logOut();
   }
 
   logOut = () => {
-    // AsyncStorage.getItem("user").then((user) => {
-    //   console.log('usrrrrrrrrrrr', user)
-    //     if (user) {
-    //       console.log('i am in user activeeee')
-    //         let parsedData = JSON.parse(user);
-    //         console.log('parsed dataa', parsedData.firstName)
-    //         this.setState({
-    //           first_name:parsedData.firstName,
-    //           last_name:parsedData.lastName
-    //         })
-    //     }else{
-    //       this.setState({
-    //         loader:false
-    //       })
-    //     }
-    // })
     AsyncStorage.removeItem("user")
     NavigationServices.navigate('LoginScreen');
 }
