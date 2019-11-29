@@ -42,6 +42,7 @@ export function* loginUser(action) {
 
         }
         yield put({ type: AuthActions.LOGIN_USER_DATA_SUCESS, payload:response.data})
+        yield put({ type: AuthActions.VERIFY_CODE_SUCCESS, payload: response.data })
         NavigationServices.reset("TabStack")
     }
    

@@ -22,7 +22,10 @@ class LoginScreen extends React.Component {
       console.log('async storage', AsyncStorage.getItem('user'))
         AsyncStorage.getItem("user").then((user) => {
             if (user) {
-                NavigationServices.reset("TabStack")
+              let parsedData = JSON.parse(user);
+              console.log('parsed datatatatatatatatt', parsedData)
+              this.props.logins(parsedData)
+              NavigationServices.reset("TabStack")
             }else{
                 this.setState({
                     loader:false
@@ -91,6 +94,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loginUserData: payload => dispatch(AuthActions.loginUserData(payload)),
+    logins:payload => dispatch( {type: AuthActions.VERIFY_CODE_SUCCESS, payload})
   }
 }
 

@@ -16,11 +16,8 @@ class HomeScreen extends React.Component {
 
   getUser = () => {
     AsyncStorage.getItem("user").then((user) => {
-      console.log('usrrrrrrrrrrr', user)
         if (user) {
-          console.log('i am in user activeeee')
             let parsedData = JSON.parse(user);
-            console.log('parsed dataa', parsedData.firstName)
             this.setState({
               first_name:parsedData.firstName,
               last_name:parsedData.lastName
@@ -33,7 +30,6 @@ class HomeScreen extends React.Component {
     })
 }
     render() {
-      console.log('current user', this.state.current_user)
       const {first_name, last_name} = this.state
       return (
         <View style={{width:'100%', paddingHorizontal:20}}>

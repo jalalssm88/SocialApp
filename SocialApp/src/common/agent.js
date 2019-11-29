@@ -1,5 +1,5 @@
 import Axios from "axios";
-const baseUrl = "http://192.168.0.128:5000/";
+const baseUrl = "http://192.168.0.122:5000/";
 export default class HttpService {
     static getRequest = (url = "", headers = {},customUrl="") => {
        return Axios.get(customUrl?customUrl:`${baseUrl}${url}`, {

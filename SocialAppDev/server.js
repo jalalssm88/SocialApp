@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const User = require('./api/routes/userRoute');
+const cover_pic = require('./api/routes/coverPictureRoute')
+app.use('/uploads',express.static("uploads"))
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,7 +25,9 @@ mongoose.connect('mongodb+srv://jalal:123@socialapp-wbe7k.mongodb.net/test?retry
 // })
 
 // Use Routes
+
 app.use('/user', User);
+app.use('/cover_pic', cover_pic)
 
 
 app.use((req, res, next)=> {

@@ -81,6 +81,7 @@ router.post('/login', (req, res, next)=>{
                     token:'Bearer ' + token,
                     firstName:user[0].first_name,
                     lastName:user[0].last_name,
+                    userId:user[0]._id
                 })
             }
             res.status(401).json({

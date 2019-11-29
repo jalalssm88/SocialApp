@@ -2,12 +2,11 @@ import { AuthActions } from "../actions/";
 
 const INITIAL_STATE = {
     isLoading:false,
-    user:[],
+    user:{},
     currentUser:{}
 };
 
 function Reducer(state = INITIAL_STATE, action) {
-    console.log('main action', action)
     switch (action.type) {
         case AuthActions.CREATE_USER_DATA:
             return{
@@ -23,10 +22,13 @@ function Reducer(state = INITIAL_STATE, action) {
             return{
                 ...state,
             }
-        case AuthActions.LOGIN_USER_DATA_SUCESS:
-            return { 
-                ...state, currentUser: action.payload,
-            };
+        // case AuthActions.LOGIN_USER_DATA_SUCESS:
+        //     return { 
+        //         ...state, currentUser: action.payload,
+        //     };
+        case AuthActions.VERIFY_CODE_SUCCESS:
+            console.log('in auth reducerrrrrrrr', action)
+            return { ...state, isLoading: false, currentUser:action.payload }
         default:
             return state;
     }
