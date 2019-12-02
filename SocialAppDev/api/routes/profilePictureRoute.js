@@ -40,18 +40,21 @@ var storage = multer.diskStorage({
     }
   })
 
-const coverPicture = require('../models/coverPictureModel');
-router.post('/upload_cover_picture', uploads.single('fileData'), (req, res, next)=>{
+
+const profilePicture = require('../models/profilePictureModel');
+router.post('/upload_profile_picture', uploads.single('fileData'), (req, res, next)=>{
+    console.log('fileeeeee========', req.file)
     var images = `http://${req.headers.host}/${req.file.path}`
-    const new_cover_picture = new coverPicture({
+    console.log('imageee', images)
+    const new_profile_picture = new profilePicture({
         user_id:req.headers.user_id,
-        cover_picture:images
+        profile_picture:images
     })
-    new_cover_picture.save()
+    new_profile_picture.save()
     .then(picture => {
         res.status(200).json({
             status:"success",
-            message: 'Cover picture successfully uploaded',
+            message: 'Profile picture successfully uploaded',
         });
     })
     .catch(err => {
@@ -61,17 +64,18 @@ router.post('/upload_cover_picture', uploads.single('fileData'), (req, res, next
     })
 });
 
-router.get('/get_cover_picture/:id', (req, res, next)=>{
+router.get('/get_profile_picture/:id', (req, res, next)=>{
     const id = req.params.id;
+    console.log('id in profile pic', id)
     var query ={
         "user_id":id
     }
-    coverPicture.find (query) 
-    .select('_id user_id cover_picture')
+    profilePicture.find (query) 
+    .select('_id user_id profile_picture')
     .exec()
     .then(doc => {
         var last_image = doc[doc.length-1];
-        console.log("doc in cover picture", doc)
+        console.log('doc in profile picture', doc)
         console.log('last image', last_image)
         if(doc){
             res.status(200).json(last_image)

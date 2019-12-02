@@ -4,12 +4,11 @@ import {View, Text, Image, TextInput, TouchableOpacity,Picker, StyleSheet} from 
 import styles from './Style'
 import { connect } from "react-redux";
 import { AuthActions } from '../../store/actions/';
+import {showToast} from '../../config/utils'
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment'
 import RNPickerSelect from 'react-native-picker-select';
 import Feather from 'react-native-vector-icons/Feather';
-
-
 
 class SignupScreen extends React.Component {
   constructor(props){
@@ -23,15 +22,36 @@ class SignupScreen extends React.Component {
       date_of_birth:''
     }
   }
-  createUser = ()=>{
-    if(this.state.first_name !=="" && this.state.last_name !=="" && this.state.email !==""){
-      this.props.createUserData(this.state)
+  createUser = () => {
+    let { first_name, last_name, email, password, gender, date_of_birth } = this.state
+    if (first_name && last_name && email && password && gender && date_of_birth) {
+      let fullNameReg = /^([a-zA-Z]+|[a-zA-Z]+\s{1}[a-zA-Z]{1,}|[a-zA-Z]+\s{1}[a-zA-Z]{3,}\s{1}[a-zA-Z]{1,})$/;
+      let reg = /^\w+([\.-]?\w+)*@{1}\w+([\.-]?\w+)*(\.[a-zA-Z]{2,3})+$/;
+      if (fullNameReg.test(first_name) &&(fullNameReg.test(last_name))) {
+        if (reg.test(email)) {
+          if (this.state.email == email) {
+            this.props.createUserData(this.state)
+          }
+          else {
+            this.props.verifyEmail(dataToSend)
+          }
+        }
+        else {
+          showToast("Email is invalid")
+        }
+      }
+      else {
+        showToast("First name or last name invalid")
+      }
     }
+    else {
+      showToast("All fields are required")
+    }
+
   }
 
   render() {
     const {isLoading} = this.props
-    console.log('isloading', isLoading)
     return (
       <View style={styles.formContainer}>
         <View style={{height:50}}></View>
@@ -113,24 +133,19 @@ class SignupScreen extends React.Component {
               />
             </View>
         <TouchableOpacity onPress={this.createUser} style={styles.buttons}>
-          <Text style={{color:"white"}}>Create</Text>
-        </TouchableOpacity>
-        <View>
           {
-          
-            isLoading?<Spinner color="red" />:<Text></Text>
+            isLoading?<Spinner color="white"/>:
+            <Text style={{color:"white"}}>Create</Text>
           }
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log('mapstattoprops in signup component', state)
   return {
-    user:state.Auth.user,
-    isLoading:state.Auth.isLoading
+    isLoading:state.Auth.signupLoading,
   }
 }
 const mapDispatchToProps = (dispatch) => {

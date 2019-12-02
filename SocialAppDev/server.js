@@ -6,6 +6,8 @@ const app = express();
 
 const User = require('./api/routes/userRoute');
 const cover_pic = require('./api/routes/coverPictureRoute')
+const profile_pic = require('./api/routes/profilePictureRoute')
+
 app.use('/uploads',express.static("uploads"))
 
 // Body parser middleware
@@ -28,6 +30,7 @@ mongoose.connect('mongodb+srv://jalal:123@socialapp-wbe7k.mongodb.net/test?retry
 
 app.use('/user', User);
 app.use('/cover_pic', cover_pic)
+app.use('/profile_pic', profile_pic)
 
 
 app.use((req, res, next)=> {

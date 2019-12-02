@@ -1,8 +1,8 @@
 import { AuthActions } from "../actions/";
 
 const INITIAL_STATE = {
-    isLoading:false,
-    user:{},
+    signupLoading:false,
+    loginLoading:false,
     currentUser:{}
 };
 
@@ -10,25 +10,31 @@ function Reducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case AuthActions.CREATE_USER_DATA:
             return{
-                ...state, isLoading:true
+                ...state, signupLoading:true
             }
         case AuthActions.CREATE_USER_DATA_SUCESS:
-            console.log('in reduxer', action)
-            return { 
-                ...state, user:action.payload, isLoading:false 
+            return{ 
+                ...state, signupLoading:false 
+            }
+        case AuthActions.CREATE_USER_DATA_FAIL:
+            return{
+                ...state, signupLoading:false
             }
 
         case AuthActions.LOGIN_USER_DATA:
             return{
-                ...state,
+                ...state, loginLoading:true
             }
-        // case AuthActions.LOGIN_USER_DATA_SUCESS:
-        //     return { 
-        //         ...state, currentUser: action.payload,
-        //     };
+        case AuthActions.LOGIN_USER_DATA_SUCESS:
+            return { 
+                ...state, loginLoading:false
+            };
+        case AuthActions.LOGIN_USER_DATA_FAIL:
+            return{
+                ...state, loginLoading:false
+            }
         case AuthActions.VERIFY_CODE_SUCCESS:
-            console.log('in auth reducerrrrrrrr', action)
-            return { ...state, isLoading: false, currentUser:action.payload }
+            return { ...state, currentUser:action.payload }
         default:
             return state;
     }

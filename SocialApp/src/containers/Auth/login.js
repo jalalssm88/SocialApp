@@ -4,8 +4,8 @@ import {View, Text, Image, TextInput, TouchableOpacity, AsyncStorage} from 'reac
 import styles from './Style'
 import { connect } from "react-redux";
 import { AuthActions } from '../../store/actions/';
+import { showToast } from '../../config/utils'
 import NavigationServices from "../../services/NavigationServices";
-
 
 class LoginScreen extends React.Component {
     constructor(props){
@@ -19,11 +19,9 @@ class LoginScreen extends React.Component {
     }
 
     getUser = () => {
-      console.log('async storage', AsyncStorage.getItem('user'))
         AsyncStorage.getItem("user").then((user) => {
             if (user) {
               let parsedData = JSON.parse(user);
-              console.log('parsed datatatatatatatatt', parsedData)
               this.props.logins(parsedData)
               NavigationServices.reset("TabStack")
             }else{
@@ -34,9 +32,17 @@ class LoginScreen extends React.Component {
         })
     }
 
-    login =()=>{
-      if(this.state.email !=="" && this.state.password !==""){
-        this.props.loginUserData({email:this.state.email, password:this.state.password})
+    login = () => {
+      let {email, password} = this.state
+      if (email && password) {
+        let reg = /^\w+([\.-]?\w+)*@{1}\w+([\.-]?\w+)*(\.[a-zA-Z]{2,3})+$/;
+        if (reg.test(email)) {
+          this.props.loginUserData({email:email, password:password})
+        }else {
+          showToast("Email is invalid")
+        }
+      }else {
+        showToast("All fields are required")
       }
     }
 
@@ -49,6 +55,7 @@ class LoginScreen extends React.Component {
     }
 
     render() {
+      const {isLoading} = this.props
       return (
         <React.Fragment>
           {
@@ -71,7 +78,10 @@ class LoginScreen extends React.Component {
               value={this.state.password}
             />
             <TouchableOpacity onPress={this.login} style={styles.buttons}>
-              <Text style={{color:"white"}}>Login</Text>
+              {
+                isLoading?<Spinner color="white" />:
+                <Text style={{color:"white"}}>Login</Text>
+              }
             </TouchableOpacity>
             <Text style={{marginTop:50, marginBottom:10}}>Dont have account? </Text>
             <TouchableOpacity onPress={this.gotoSignup} style={styles.buttons}>
@@ -86,9 +96,8 @@ class LoginScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('mapstattoprops in signup component', state)
   return {
-    user:state.Auth.user,
+    isLoading:state.Auth.loginLoading,
   }
 }
 const mapDispatchToProps = (dispatch) => {

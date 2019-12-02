@@ -16,7 +16,7 @@ class SettingScreen extends React.Component {
 
   logOut = () => {
     AsyncStorage.removeItem("user")
-    NavigationServices.navigate('LoginScreen');
+    NavigationServices.reset('LoginScreen');
 }
     render() {
       return (

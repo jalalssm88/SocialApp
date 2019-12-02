@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Spinner } from 'native-base';
 import {View, Text, Image, AsyncStorage, FlatList, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import { connect } from "react-redux";
+import {ProfileActions} from '../../store/actions/'
+
+
 // import jwt_decode from 'jwt-decode';
 
 class HomeScreen extends React.Component {
@@ -41,6 +45,7 @@ class HomeScreen extends React.Component {
       ]
     }
     this.getUser();
+    this.getProfilePicture()
   }
 
   getUser = () => {
@@ -57,16 +62,24 @@ class HomeScreen extends React.Component {
           })
         }
     })
-}
+  }
+  getProfilePicture =()=> {
+    this.props.getProfile()
+  }
     render() {
       const {first_name, last_name} = this.state
+      const{profilePicture, profileLoading} = this.props;
+      console.log('profile', profilePicture)
       return (
         <View style={{width:'100%',}}>
           <ScrollView style={{ backgroundColor:"gray"}}>
             <View style={{backgroundColor:"white"}}>
               <View style={{flexDirection:'row', width:"100%", height:60, alignItems:'center', paddingHorizontal:15}}>
-                <View style={{width:"10%", height:50, width:50, borderRadius:50, backgroundColor:'green'}}>
-                  <Image source={{uri:"https://www.gstatic.com/webp/gallery/4.jpg"}} style={{height:50, width:50, borderRadius:50}} />
+                <View style={{width:"10%", height:50, width:50, borderRadius:50}}>
+                  {
+                    profilePicture == ""?<Image source={{uri:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/1024px-Placeholder_no_text.svg.png"}} style={{height:50, width:50, borderRadius:50}} />:
+                    <Image source={{uri:profilePicture.profile_picture}} style={{height:50, width:50, borderRadius:50}} />
+                  }
                 </View>
                 <View style={{width:'85%', height:50, alignItems:'center', justifyContent:'center', paddingLeft:10}}>
                   <TouchableOpacity style={{width:"100%", height:40, borderColor:"gray", borderRadius:20, borderWidth:1, justifyContent:'center'}}>
@@ -131,5 +144,16 @@ class HomeScreen extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    profilePicture:state.Profile.profile_picture_data,
+    profileLoading:state.Profile.profilePicLoading
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getProfile:payload => dispatch({type:ProfileActions.GET_PROFILE_PICTURE})
+  }
+}
 
-export default HomeScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
