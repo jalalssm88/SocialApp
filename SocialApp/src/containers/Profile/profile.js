@@ -6,6 +6,7 @@ const { height, width } = Dimensions.get("window");
 import ImagePicker from 'react-native-image-crop-picker';
 import { connect } from "react-redux";
 import {ProfileActions} from '../../store/actions/'
+// import AddProfiles from '../../components/addProfile'
 
 
 class ProfileScreen extends React.Component {
@@ -38,85 +39,85 @@ class ProfileScreen extends React.Component {
         // }
       ],
       education:[
-        // {
-        //   id:1,
-        //   institude:"Preson University North Campus Karachi",
-        //   school_status:false,
-        // },
-        // {
-        //   id:2,
-        //   institude:"St.Patrick College, Karachi",
-        //   school_status:false,
-        // },
-        // {
-        //   id:3,
-        //   institude:"Al Karim public school chitral",
-        //   school_status:false,
-        // }
+        {
+          id:1,
+          institude:"Preson University North Campus Karachi",
+          school_status:false,
+        },
+        {
+          id:2,
+          institude:"St.Patrick College, Karachi",
+          school_status:false,
+        },
+        {
+          id:3,
+          institude:"Al Karim public school chitral",
+          school_status:false,
+        }
       ],
       current_city:"",
       home_town:"",
       relationship_status:"",
       photos:[
-        // {
-        //   id:1,
-        //   image:"https://www.gstatic.com/webp/gallery3/1.png"
-        // },
-        // {
-        //   id:2,
-        //   image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
-        // },
-        // {
-        //   id:3,
-        //   image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
-        // },
-        // {
-        //   id:4,
-        //   image:"https://www.gstatic.com/webp/gallery3/1.png"
-        // },
-        // {
-        //   id:5,
-        //   image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
-        // },
-        // {
-        //   id:6,
-        //   image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
-        // },
+        {
+          id:1,
+          image:"https://www.gstatic.com/webp/gallery3/1.png"
+        },
+        {
+          id:2,
+          image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
+        },
+        {
+          id:3,
+          image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
+        },
+        {
+          id:4,
+          image:"https://www.gstatic.com/webp/gallery3/1.png"
+        },
+        {
+          id:5,
+          image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
+        },
+        {
+          id:6,
+          image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
+        },
       ],
       friends:[
-        // {
-        //   id:1,
-        //   name:"umar",
-        //   color:"red",
-        //   image:"https://www.gstatic.com/webp/gallery3/1.png"
-        // },
-        // {
-        //   id:2,
-        //   name:"jalal ",
-        //   color:"blue",
-        //   image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
-        // },
-        // {
-        //   id:3,
-        //   name:"fahad",
-        //   color:"green",
-        //   image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
-        // },
-        // {
-        //   id:4,
-        //   name:"musbah",
-        //   image:"https://www.gstatic.com/webp/gallery3/1.png"
-        // },
-        // {
-        //   id:5,
-        //   name:"jalal uddin",
-        //   image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
-        // },
-        // {
-        //   id:6,
-        //   name:"rafay",
-        //   image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
-        // },
+        {
+          id:1,
+          name:"umar",
+          color:"red",
+          image:"https://www.gstatic.com/webp/gallery3/1.png"
+        },
+        {
+          id:2,
+          name:"jalal ",
+          color:"blue",
+          image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
+        },
+        {
+          id:3,
+          name:"fahad",
+          color:"green",
+          image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
+        },
+        {
+          id:4,
+          name:"musbah",
+          image:"https://www.gstatic.com/webp/gallery3/1.png"
+        },
+        {
+          id:5,
+          name:"jalal uddin",
+          image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
+        },
+        {
+          id:6,
+          name:"rafay",
+          image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
+        },
       ]
     }
     this.getUser();

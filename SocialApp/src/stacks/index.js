@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer} from "react-navigation";
 import TabStack from './TabStack';
 import AuthStack from './AuthStack';
+import ProfileStack from './ProfileStack'
 import {View, Text} from 'react-native'
 
 const MainStack = createStackNavigator({
@@ -11,7 +12,8 @@ const MainStack = createStackNavigator({
         header:<View style={{width:'100%', height:50, backgroundColor:'blue', alignItems:'center', justifyContent:'center'}}>
             <Text style={{color:'white'}}>Header</Text>
         </View>
-    }}
+    }},
+    ...ProfileStack,
 },{
     // headerMode: "none",
     // initialRouteName: "TabStack"
