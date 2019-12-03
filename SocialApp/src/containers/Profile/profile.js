@@ -39,21 +39,21 @@ class ProfileScreen extends React.Component {
         // }
       ],
       education:[
-        {
-          id:1,
-          institude:"Preson University North Campus Karachi",
-          school_status:false,
-        },
-        {
-          id:2,
-          institude:"St.Patrick College, Karachi",
-          school_status:false,
-        },
-        {
-          id:3,
-          institude:"Al Karim public school chitral",
-          school_status:false,
-        }
+        // {
+        //   id:1,
+        //   institude:"Preson University North Campus Karachi",
+        //   school_status:false,
+        // },
+        // {
+        //   id:2,
+        //   institude:"St.Patrick College, Karachi",
+        //   school_status:false,
+        // },
+        // {
+        //   id:3,
+        //   institude:"Al Karim public school chitral",
+        //   school_status:false,
+        // }
       ],
       current_city:"",
       home_town:"",
@@ -276,7 +276,9 @@ class ProfileScreen extends React.Component {
                             <Feather name="archive" color="black" size={25} ></Feather>
                           </View>
                           <View style={{width:'90%'}}>
+                            <TouchableOpacity onPress={()=>{this.props.navigation.navigate("AddProfiles", {title:"Add work place"})}}>
                               <Text style={{fontSize:18}}>Add Work place</Text>
+                            </TouchableOpacity>
                           </View>
                         </View>
                     </View>
@@ -312,7 +314,9 @@ class ProfileScreen extends React.Component {
                             <Feather name="layers" color="black" size={25} ></Feather>
                           </View>
                           <View style={{width:'90%'}}>
+                            <TouchableOpacity onPress={()=>{this.props.navigation.navigate("AddProfiles", {title:"Add Education"})}}>
                               <Text style={{fontSize:18}}>Add Education</Text>
+                            </TouchableOpacity>
                           </View>
                         </View>
                     </View>
@@ -339,7 +343,9 @@ class ProfileScreen extends React.Component {
                             <Feather name="map-pin" color="black" size={25} ></Feather>
                           </View>
                           <View style={{width:'90%'}}>
-                              <Text style={{fontSize:18}}>Add Current city</Text>
+                            <TouchableOpacity onPress={()=>{this.props.navigation.navigate("AddProfiles", {title:"Add Current City"})}}>
+                              <Text style={{fontSize:18}}>Add current city</Text>
+                            </TouchableOpacity>
                           </View>
                         </View>
                     </View>
@@ -366,7 +372,9 @@ class ProfileScreen extends React.Component {
                             <Feather name="map-pin" color="black" size={25} ></Feather>
                           </View>
                           <View style={{width:'90%'}}>
-                              <Text style={{fontSize:18}}>Add Home town</Text>
+                            <TouchableOpacity onPress={()=>{this.props.navigation.navigate("AddProfiles", {title:"Add Homw Town"})}}>
+                              <Text style={{fontSize:18}}>Add home town</Text>
+                            </TouchableOpacity>
                           </View>
                         </View>
                     </View>
