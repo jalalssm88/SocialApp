@@ -131,6 +131,8 @@ class ProfileScreen extends React.Component {
     this.getCoverPicture()
     this.getProfilePicture()
     this.getWorkPlace()
+    this.getSchool()
+    this.getUniversity()
   }
   
   getUser = () => {
@@ -201,6 +203,12 @@ class ProfileScreen extends React.Component {
   getWorkPlace = ()=> {
     this.props.getWorkPlace()
   }
+  getSchool = ()=> {
+    this.props.getSchool()
+  }
+  getUniversity = ()=> {
+    this.props.getUniversity()
+  }
 
   toggleModal = ()=> {
     this.setState({
@@ -219,8 +227,8 @@ class ProfileScreen extends React.Component {
   }
   render() {
     const {first_name, last_name} = this.state
-    const{coverPicture, coverLoading, profilePicture, profileLoading, workPlace} = this.props;
-    console.log('=============workPlace', workPlace)
+    const{coverPicture, coverLoading, profilePicture, profileLoading, workPlace, schoolData, universityData} = this.props;
+    console.log('=============universityData', universityData)
     return (
       <ScrollView>
         {
@@ -266,7 +274,7 @@ class ProfileScreen extends React.Component {
               
               <View style={{width:"100%",paddingTop:20}}>
                 {/* work place */}
-                <View style={{paddingBottom:10}}>
+                <View >
                   {
                     workPlace.length?
                     <View>
@@ -279,7 +287,10 @@ class ProfileScreen extends React.Component {
                             </View>
                             <View style={{width:'90%', justifyContent:'center' }}>
                               {
-                                item.is_working?<Text style={{fontSize:18}}>Working at <Text style={{fontWeight:'bold'}}>{item.work_place}</Text></Text>:
+                                item.is_working?
+                                <TouchableOpacity onPress={()=>{this.props.navigation.navigate("AddProfiles", {title:"Add work place"})}}>
+                                  <Text style={{fontSize:18}}>Working at <Text style={{fontWeight:'bold'}}>{item.work_place}</Text></Text>
+                                </TouchableOpacity>:
                                 <TouchableOpacity onPress={()=>{this.props.navigation.navigate("AddProfiles", {title:"Add work place"})}}>
                                   <Text style={{fontSize:18}}>Former {item.job_title} <Text style={{fontWeight:'bold'}}>{item.work_place}</Text></Text>
                                 </TouchableOpacity>
@@ -291,7 +302,7 @@ class ProfileScreen extends React.Component {
                       />
                     </View>:
                     <View>
-                      <View style={{flexDirection:'row',}}>
+                      <View style={{flexDirection:'row', marginBottom:10, backgroundColor:'red', height:45}}>
                           <View style={{width:'10%'}}>
                             <Feather name="archive" color="black" size={25} ></Feather>
                           </View>
@@ -306,12 +317,12 @@ class ProfileScreen extends React.Component {
                 </View>
                 
                 {/* university */}
-                <View style={{paddingBottom:10}}>
+                <View >
                   {
-                    this.state.university.length || this.state.school.length?
+                    universityData.length || schoolData.length?
                     <View>
                       <FlatList
-                        data={this.state.university}
+                        data={universityData}
                         renderItem={({ item }) => 
                           <View style={{flexDirection:'row',height:45}}>
                             <View style={{width:'10%',justifyContent:'center'}}>
@@ -319,13 +330,18 @@ class ProfileScreen extends React.Component {
                             </View>
                             <View style={{width:'90%', justifyContent:'center'}}>
                               {
-                                item.school_status?<Text style={{fontSize:18}}>Studies at <Text style={{fontWeight:'bold'}}>{item.institude}</Text></Text>:
-                                <Text style={{fontSize:18}}>Studied at <Text style={{fontWeight:'bold'}}>{item.institude}</Text></Text>
+                                item.is_graduated?
+                                <TouchableOpacity onPress={this.toggleModal3}>
+                                  <Text style={{fontSize:18}}>Studied at <Text style={{fontWeight:'bold'}}>{item.university}</Text></Text>
+                                </TouchableOpacity>:
+                                <TouchableOpacity onPress={this.toggleModal3}>
+                                  <Text style={{fontSize:18}}>Studies at <Text style={{fontWeight:'bold'}}>{item.university}</Text></Text>
+                                </TouchableOpacity>
                               }
                             </View>
                           </View>
                         }
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item._id}
                       />
                     </View>:
                     <View>
@@ -346,21 +362,23 @@ class ProfileScreen extends React.Component {
                 {/* school */}
                 <View >
                   {
-                    this.state.school.length?
+                    schoolData.length?
                     <View>
                       <FlatList
-                        data={this.state.school}
+                        data={schoolData}
                         renderItem={({ item }) => 
-                          <View style={{flexDirection:'row',height:45}}>
+                          <View style={{flexDirection:'row',height:45,}}>
                             <View style={{width:'10%',justifyContent:'center'}}>
                               <Feather name="layers" color="black" size={25} ></Feather>
                             </View>
                             <View style={{width:'90%', justifyContent:'center'}}>
-                              <Text style={{fontSize:18}}>Went to <Text style={{fontWeight:'bold'}}>{item.institude}</Text></Text>
+                              <TouchableOpacity onPress={this.toggleModal3}>
+                                <Text style={{fontSize:18}}>Went to <Text style={{fontWeight:'bold'}}>{item.school}</Text></Text>
+                              </TouchableOpacity>
                             </View>
                           </View>
                         }
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item._id}
                       />
                     </View>:
                     <View>
@@ -613,7 +631,10 @@ const mapStateToProps = (state) => {
     profilePicture:state.Profile.profile_picture_data,
     profileLoading:state.Profile.profilePicLoading,
 
-    workPlace:state.Profile.work_place_data
+    workPlace:state.Profile.work_place_data,
+    schoolData:state.Profile.school_data,
+    universityData:state.Profile.university_data,
+
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -623,7 +644,9 @@ const mapDispatchToProps = (dispatch) => {
     profileImage:payload => dispatch(ProfileActions.uploadProfilePicture(payload)),
     getProfile:payload => dispatch({type:ProfileActions.GET_PROFILE_PICTURE}),
 
-    getWorkPlace:payload => dispatch({type:ProfileActions.GET_WORK_PLACE})
+    getWorkPlace:payload => dispatch({type:ProfileActions.GET_WORK_PLACE}),
+    getSchool:payload => dispatch({type:ProfileActions.GET_SCHOOL}),
+    getUniversity:payload => dispatch({type:ProfileActions.GET_UNIVERSITY}),
   }
 }
 

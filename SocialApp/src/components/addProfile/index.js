@@ -22,6 +22,7 @@ class AddProfiles extends React.Component {
             job_title:'',
             start_date:'',
             end_date:'',
+            class_year:'',
             is_working:true,
             is_graduated:false,
         }
@@ -34,9 +35,14 @@ class AddProfiles extends React.Component {
     }
 
     add_profiles = (type)=> {
-        const {text_title, start_date, end_date, is_working, is_graduated, job_title} = this.state
+        console.log('type', type)
+        const {text_title, start_date, end_date, is_working, is_graduated, job_title, class_year} = this.state
         if(type == "Add work place"){
            this.props.addWorkPlace({work_place:text_title, start_date:start_date, end_date:end_date, is_working:is_working, job_title:job_title})
+        }else if(type == "Add High School"){
+            this.props.addSchool({school:text_title, class_year:class_year})
+        }else if(type == "Add University"){
+            this.props.addUniversity({university:text_title, start_date:start_date, end_date:end_date, is_graduated:is_graduated})
         }
     }
 
@@ -143,14 +149,16 @@ class AddProfiles extends React.Component {
                         <View>
                             <View style={{width:"100%", height:60, paddingTop:10, borderBottomWidth:1, borderColor:"#c7c5c1"}}>
                                 <View style={{paddingHorizontal:15, flexDirection:'row', justifyContent:'space-between'}}>
-                                    <View>
+                                   {
+                                       title == "Add High School"?
+                                       <View>
                                         <DatePicker
-                                            date={this.state.start_date}
+                                            date={this.state.class_year}
                                             mode="date"
                                             maxDate={moment().format('YYYY-MM-DD')}
                                             showIcon={true}
-                                            value={this.state.start_date}
-                                            placeholder="Start date"
+                                            value={this.state.class_year}
+                                            placeholder="Class year"
                                             format='YYYY-MM-DD'
                                             confirmBtnText="Confirm"
                                             cancelBtnText="Cancel"
@@ -183,9 +191,54 @@ class AddProfiles extends React.Component {
                                             iconComponent={
                                             <Feather name="calendar" size={25} style={[styles.imageIconStyle, {left:350, bottom:5}]}></Feather>
                                             }
-                                            onDateChange={(start_date) => { this.setState({ start_date }) }}
+                                            onDateChange={(class_year) => { this.setState({ class_year }) }}
                                         />
-                                    </View>
+                                    </View>:
+                                         <View>
+                                         <DatePicker
+                                             date={this.state.start_date}
+                                             mode="date"
+                                             maxDate={moment().format('YYYY-MM-DD')}
+                                             showIcon={true}
+                                             value={this.state.start_date}
+                                             placeholder="Start date"
+                                             format='YYYY-MM-DD'
+                                             confirmBtnText="Confirm"
+                                             cancelBtnText="Cancel"
+                                             allowFontScaling={false}
+                                             customStyles={
+                                             {
+                                                 dateInput: {
+                                                 borderWidth: 0,
+                                                 alignItems: "flex-start",
+                                                 paddingLeft: 5,
+                                                 width: "80%",
+                                                 },
+                                                 placeholderText: {
+                                                 fontSize: 14,
+                                                 color: "#3F3F41",
+                                                 fontFamily:'Montserrat-Regular',
+                                                 },
+                                                 dateText: {
+                                                 fontSize: 14,
+                                                 color: "#3F3F41",
+                                                 fontFamily:"Montserrat-Regular",
+ 
+                                                 },
+                                                 datePicker: {
+                                                 marginTop: 10,
+                                                 borderTopWidth: 0
+                                                 }
+                                             }
+                                             }
+                                             iconComponent={
+                                             <Feather name="calendar" size={25} style={[styles.imageIconStyle, {left:350, bottom:5}]}></Feather>
+                                             }
+                                             onDateChange={(start_date) => { this.setState({ start_date }) }}
+                                         />
+                                     </View>
+                                    
+                                   }
                                 </View>
                             </View>
                             <View  style={{height:70}}>
@@ -265,6 +318,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addWorkPlace: payload => dispatch(ProfileActions.addWorkPlace(payload)),
+    addSchool:payload => dispatch(ProfileActions.addSchool(payload)),
+    addUniversity:payload => dispatch(ProfileActions.addUniversity(payload))
     // getCover:payload => dispatch({type:ProfileActions.GET_COVER_PICTURE}),
   }
 }

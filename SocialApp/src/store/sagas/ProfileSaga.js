@@ -76,6 +76,7 @@ export function* addWorkPlace(action) {
     }
 }
 
+// get work place
 export function* getWorkPlace(action) {
     let user = yield select(getUser);
     let userId = user.userId;
@@ -84,6 +85,60 @@ export function* getWorkPlace(action) {
     console.log(response, "get work placee")
     if(response && response.status == 200){
         yield put({ type: ProfileActions.GET_WORK_PLACE_SUCCESS, payload:response.data})
+    }
+}
+
+// add school
+export function* addSchool(action){
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    let { payload } = action;
+    console.log('payloaddd in saga', payload)
+   
+    const response = yield call(HttpService.postRequest, "school/add_school", { user_id: userId, access_token: token},{...payload} )
+    console.log(response, "add school")
+    if(response && response.status == 200){
+        yield put ({type :ProfileActions.GET_SCHOOL})
+    }
+}
+
+// get work place
+export function* getSchool(action) {
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    const response = yield call(HttpService.getRequest, `school/get_school/${userId}`, { user_id: userId, access_token: token})
+    console.log(response, "get school")
+    if(response && response.status == 200){
+        yield put({ type: ProfileActions.GET_SCHOOL_SUCCESS, payload:response.data})
+    }
+}
+
+// add Univeristy
+export function* addUniversity(action){
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    let { payload } = action;
+    console.log('payloaddd in saga', payload)
+   
+    const response = yield call(HttpService.postRequest, "university/add_university", { user_id: userId, access_token: token},{...payload} )
+    console.log(response, "add universty")
+    if(response && response.status == 200){
+        yield put ({type :ProfileActions.GET_UNIVERSITY})
+    }
+}
+
+// get University
+export function* getUniversity(action) {
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    const response = yield call(HttpService.getRequest, `university/get_university/${userId}`, { user_id: userId, access_token: token})
+    console.log(response, "get universty")
+    if(response && response.status == 200){
+        yield put({ type: ProfileActions.GET_UNIVERSITY_SUCCESS, payload:response.data})
     }
 }
 

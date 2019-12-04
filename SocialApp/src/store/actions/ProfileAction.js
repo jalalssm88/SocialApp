@@ -17,7 +17,17 @@ export default class Action {
     static GET_WORK_PLACE = "GET_WORK_PLACE"
     static GET_WORK_PLACE_SUCCESS = "GET_WORK_PLACE_SUCCESS"
 
+    // Add school
+    static ADD_SCHOOL = "ADD_SCHOOL"
+    static ADD_SCHOOL_SUCCESS = "ADD_SCHOOL_SUCCESS"
+    static GET_SCHOOL = "GET_SCHOOL"
+    static GET_SCHOOL_SUCCESS = "GET_SCHOOL_SUCCESS"
 
+    // Add school
+    static ADD_UNIVERSITY = "ADD_UNIVERSITY"
+    static ADD_UNIVERSITY_SUCCESS = "ADD_UNIVERSITY_SUCCESS"
+    static GET_UNIVERSITY = "GET_UNIVERSITY"
+    static GET_UNIVERSITY_SUCCESS = "GET_UNIVERSITY_SUCCESS"
 
     // upload cover picture
     static uploadCoverPicture(payload) {
@@ -60,5 +70,34 @@ export default class Action {
             payload
         };
     }
+
+    // add school
+    static addSchool(payload) {
+        return {
+            type: Action.ADD_SCHOOL,
+            payload
+        };
+    }
+    static getSchool(payload) {
+        return {
+            type: Action.GET_SCHOOL,
+            payload
+        };
+    }
+
+    //add university
+    static addUniversity(payload) {
+        return {
+            type: Action.ADD_UNIVERSITY,
+            payload
+        };
+    }
+    static getUniversity(payload) {
+        return {
+            type: Action.GET_UNIVERSITY,
+            payload
+        };
+    }
+
 
 }

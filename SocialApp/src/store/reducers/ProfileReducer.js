@@ -7,7 +7,9 @@ const INITIAL_STATE = {
     profilePicLoading:false,
     profile_picture_data:{},
 
-    work_place_data:[]
+    work_place_data:[],
+    school_data:[],
+    university_data:[],
 
 };
 
@@ -54,6 +56,18 @@ function Reducer(state = INITIAL_STATE, action) {
         case ProfileActions.GET_WORK_PLACE_SUCCESS:
             return{
                 ...state, work_place_data:action.payload,
+            }
+
+        // uschool cases
+        case ProfileActions.GET_SCHOOL_SUCCESS:
+            return{
+                ...state, school_data:action.payload
+            }
+        
+        // university cases
+        case ProfileActions.GET_UNIVERSITY_SUCCESS:
+            return{
+                ...state, university_data:action.payload
             }
 
         default:

@@ -8,6 +8,8 @@ const User = require('./api/routes/users/userRoute');
 const cover_pic = require('./api/routes/profiles/coverPictureRoute')
 const profile_pic = require('./api/routes/profiles/profilePictureRoute')
 const work_place = require('./api/routes/profiles/workPlaceRoute')
+const school = require('./api/routes/profiles/schoolRoute')
+const university = require('./api/routes/profiles/universityRoute')
 
 app.use('/uploads',express.static("uploads"))
 
@@ -33,6 +35,8 @@ app.use('/user', User);
 app.use('/cover_pic', cover_pic)
 app.use('/profile_pic', profile_pic)
 app.use('/work_place', work_place)
+app.use('/school', school)
+app.use('/university', university)
 
 
 app.use((req, res, next)=> {
