@@ -7,6 +7,7 @@ import { AsyncStorage } from "react-native";
 
 export const getUser = (state) => state.Auth.currentUser
 
+// upload cover picture
 export function* uploadCoverPicture(action) {
     let user = yield select(getUser);
     let userId = user.userId;
@@ -21,6 +22,7 @@ export function* uploadCoverPicture(action) {
     }
 }
 
+// get cover picture
 export function* getCoverPicture(action) {
     let user = yield select(getUser);
     let userId = user.userId;
@@ -32,6 +34,7 @@ export function* getCoverPicture(action) {
     }
 }
 
+// upload profile picture
 export function* uploadProfilePicture(action) {
     let user = yield select(getUser);
     let userId = user.userId;
@@ -46,6 +49,7 @@ export function* uploadProfilePicture(action) {
     }
 }
 
+// get profile picture
 export function* getProfilePicture(action) {
     let user = yield select(getUser);
     let userId = user.userId;
@@ -54,6 +58,32 @@ export function* getProfilePicture(action) {
     console.log(response, "get profile picture")
     if(response && response.status == 200){
         yield put({ type: ProfileActions.GET_PROFILE_PICTURE_SUCCESS, payload:response.data})
+    }
+}
+
+//add work place
+export function* addWorkPlace(action) {
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    let { payload } = action;
+    console.log('payloaddd in saga', payload)
+   
+    const response = yield call(HttpService.postRequest, "work_place/add_work_place", { user_id: userId, access_token: token},{...payload} )
+    console.log(response, "add work place")
+    if(response && response.status == 200){
+        yield put ({type :ProfileActions.GET_WORK_PLACE})
+    }
+}
+
+export function* getWorkPlace(action) {
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    const response = yield call(HttpService.getRequest, `work_place/get_work_place/${userId}`, { user_id: userId, access_token: token})
+    console.log(response, "get work placee")
+    if(response && response.status == 200){
+        yield put({ type: ProfileActions.GET_WORK_PLACE_SUCCESS, payload:response.data})
     }
 }
 

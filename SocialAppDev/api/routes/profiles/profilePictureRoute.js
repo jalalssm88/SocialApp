@@ -41,7 +41,7 @@ var storage = multer.diskStorage({
   })
 
 
-const profilePicture = require('../models/profilePictureModel');
+const profilePicture = require('../../models/profiles/profilePictureModel');
 router.post('/upload_profile_picture', uploads.single('fileData'), (req, res, next)=>{
     console.log('fileeeeee========', req.file)
     var images = `http://${req.headers.host}/${req.file.path}`

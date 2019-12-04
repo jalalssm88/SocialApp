@@ -40,7 +40,7 @@ var storage = multer.diskStorage({
     }
   })
 
-const coverPicture = require('../models/coverPictureModel');
+const coverPicture = require('../../models/profiles/coverPictureModel');
 router.post('/upload_cover_picture', uploads.single('fileData'), (req, res, next)=>{
     var images = `http://${req.headers.host}/${req.file.path}`
     const new_cover_picture = new coverPicture({

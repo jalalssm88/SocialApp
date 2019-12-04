@@ -3,7 +3,7 @@ import { all, takeEvery } from 'redux-saga/effects';
 
 // Imports: Redux Sagas
 import { signupUser, loginUser } from "./AuthSaga";
-import { uploadCoverPicture, getCoverPicture, uploadProfilePicture, getProfilePicture} from './ProfileSaga';
+import { uploadCoverPicture, getCoverPicture, uploadProfilePicture, getProfilePicture, addWorkPlace, getWorkPlace} from './ProfileSaga';
 import { AuthActions, ProfileActions } from '../actions/';
 
 
@@ -19,6 +19,11 @@ export function* rootSaga() {
 
         takeEvery(ProfileActions.UPLOAD_PROFILE_PICTURE, uploadProfilePicture),
         takeEvery(ProfileActions.GET_PROFILE_PICTURE, getProfilePicture),
+
+        takeEvery(ProfileActions.ADD_WORK_PLACE, addWorkPlace),
+        takeEvery(ProfileActions.GET_WORK_PLACE, getWorkPlace),
+
+
 
     ]);
 };

@@ -5,7 +5,9 @@ const INITIAL_STATE = {
     cover_picture_data:{},
 
     profilePicLoading:false,
-    profile_picture_data:{}
+    profile_picture_data:{},
+
+    work_place_data:[]
 
 };
 
@@ -46,6 +48,12 @@ function Reducer(state = INITIAL_STATE, action) {
         case ProfileActions.GET_PROFILE_PICTURE_SUCCESS:
             return { 
                 ...state, profile_picture_data:action.payload, profilePicLoading:false 
+            }
+
+        // work place cases
+        case ProfileActions.GET_WORK_PLACE_SUCCESS:
+            return{
+                ...state, work_place_data:action.payload,
             }
 
         default:

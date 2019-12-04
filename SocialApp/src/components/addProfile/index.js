@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import {ProfileActions} from '../../store/actions/';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment'
-import styles from '../../containers/Auth/Style'
+import SwitchToggle from 'react-native-switch-toggle';
+import styles from './Style'
 
 
 
@@ -17,150 +18,237 @@ class AddProfiles extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            email:'',
-            toggle:true,
+            text_title:'',
+            job_title:'',
+            start_date:'',
+            end_date:'',
+            is_working:true,
+            is_graduated:false,
         }
     }
-    toggleHandler = ()=>{
+    toggleHandler = ()=> {
         this.setState({
-            toggle:!this.state.toggle
+            is_working:!this.state.is_working,
+            is_graduated:!this.state.is_graduated
         })
     }
+
+    add_profiles = (type)=> {
+        const {text_title, start_date, end_date, is_working, is_graduated, job_title} = this.state
+        if(type == "Add work place"){
+           this.props.addWorkPlace({work_place:text_title, start_date:start_date, end_date:end_date, is_working:is_working, job_title:job_title})
+        }
+    }
+
     render() {
         const {title} = this.props.navigation.state.params
         console.log('title', title)
         return(
-            <View style={{height:height}}>
-                <View style={{width:"100%", height:65, paddingTop:5, borderBottomWidth:1, borderColor:"#c7c5c1"}}>
-                    <View style={{marginHorizontal:15, flexDirection:'row',}}>
-                        <View style={{width:"20%"}}>
-                            <View style={{width:50, height:50, borderRadius:50, backgroundColor:"#d1d1d1", alignItems:'center', justifyContent:'center'}}>
-                                <Feather name="home" size={20} color="gray" />
-                            </View>
-                        </View>
-                        <View style={{width:"80%"}}>
-                            <TextInput
-                                style={{fontSize:18}}
-                                placeholder={title}
-                                onChangeText={(email) => this.setState({email})}
-                                value={this.state.email}
-                            />
-                        </View>
-                    </View>
-                </View>
-                <View style={{width:"100%", height:50, paddingTop:10, borderBottomWidth:1, borderColor:"#c7c5c1"}}>
-                    <View style={{paddingHorizontal:15, flexDirection:'row', justifyContent:'space-between'}}>
-                        <Text style={{fontSize:18}}>Currently work here</Text>
-                        <TouchableOpacity onPress={this.toggleHandler}>
-                            {
-                                this.state.toggle?
-                                <Text>yes</Text>:
-                                <Text>no</Text>
-                            }
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={{width:"100%", height:60, paddingTop:10, borderBottomWidth:1, borderColor:"#c7c5c1"}}>
-                    <View style={{paddingHorizontal:15, flexDirection:'row', justifyContent:'space-between'}}>
+            <View >
+                <View style={{height:height-100}}>
+                    {
+                        title == "Add work place"?
                         <View>
-                            <DatePicker
-                                date={this.state.date_of_birth}
-                                mode="date"
-                                maxDate={moment().format('YYYY-MM-DD')}
-                                showIcon={true}
-                                value={this.state.date_of_birth}
-                                placeholder="Start date"
-                                format='YYYY-MM-DD'
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                allowFontScaling={false}
-                                customStyles={
-                                {
-                                    dateInput: {
-                                    borderWidth: 0,
-                                    alignItems: "flex-start",
-                                    paddingLeft: 5,
-                                    width: "80%",
-                                    },
-                                    placeholderText: {
-                                    fontSize: 14,
-                                    color: "#3F3F41",
-                                    fontFamily:'Montserrat-Regular',
-                                    },
-                                    dateText: {
-                                    fontSize: 14,
-                                    color: "#3F3F41",
-                                    fontFamily:"Montserrat-Regular",
-
-                                    },
-                                    datePicker: {
-                                    marginTop: 10,
-                                    borderTopWidth: 0
-                                    }
-                                }
-                                }
-                                iconComponent={
-                                <Feather name="calendar" size={25} style={[styles.imageIconStyle, {left:350, bottom:5}]}></Feather>
-                                }
-                                onDateChange={(date_of_birth) => { this.setState({ date_of_birth }) }}
-                            />
-                        </View>
-                    </View>
-                </View>
-                <View  style={{height:70}}>
-                {
-                    this.state.toggle?<View></View>:
-                    <View style={{width:"100%", height:60, paddingTop:10, borderBottomWidth:1, borderColor:"#c7c5c1"}}>
-                        <View style={{paddingHorizontal:15, flexDirection:'row', justifyContent:'space-between'}}>
-                            <View>
-                                <DatePicker
-                                    date={this.state.date_of_birth}
-                                    mode="date"
-                                    maxDate={moment().format('YYYY-MM-DD')}
-                                    showIcon={true}
-                                    value={this.state.date_of_birth}
-                                    placeholder="End date"
-                                    format='YYYY-MM-DD'
-                                    confirmBtnText="Confirm"
-                                    cancelBtnText="Cancel"
-                                    allowFontScaling={false}
-                                    customStyles={
-                                    {
-                                        dateInput: {
-                                        borderWidth: 0,
-                                        alignItems: "flex-start",
-                                        paddingLeft: 5,
-                                        width: "80%",
-                                        },
-                                        placeholderText: {
-                                        fontSize: 14,
-                                        color: "#3F3F41",
-                                        fontFamily:'Montserrat-Regular',
-                                        },
-                                        dateText: {
-                                        fontSize: 14,
-                                        color: "#3F3F41",
-                                        fontFamily:"Montserrat-Regular",
-
-                                        },
-                                        datePicker: {
-                                        marginTop: 10,
-                                        borderTopWidth: 0
-                                        }
-                                    }
-                                    }
-                                    iconComponent={
-                                    <Feather name="calendar" size={25} style={[styles.imageIconStyle, {left:350, bottom:5}]}></Feather>
-                                    }
-                                    onDateChange={(date_of_birth) => { this.setState({ date_of_birth }) }}
-                                />
+                            <View style={{width:"100%", height:65, paddingTop:5, borderBottomWidth:1, borderColor:"#c7c5c1"}}>
+                                <View style={{marginHorizontal:15, flexDirection:'row',}}>
+                                    <View style={{width:"20%"}}>
+                                        <View style={{width:50, height:50, borderRadius:50, backgroundColor:"#d1d1d1", alignItems:'center', justifyContent:'center'}}>
+                                            <Feather name="home" size={20} color="gray" />
+                                        </View>
+                                    </View>
+                                    <View style={{width:"80%"}}>
+                                        <TextInput
+                                            style={{fontSize:18}}
+                                            placeholder={title}
+                                            onChangeText={(text_title) => this.setState({text_title})}
+                                            value={this.state.text_title}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                            <View style={{width:"100%", height:50, paddingTop:5, borderBottomWidth:1, borderColor:"#c7c5c1"}}>
+                                <View style={{marginHorizontal:15, flexDirection:'row',}}>
+                                    <View style={{width:"80%"}}>
+                                        <TextInput
+                                            style={{fontSize:18}}
+                                            placeholder="Job Title"
+                                            onChangeText={(job_title) => this.setState({job_title})}
+                                            value={this.state.job_title}
+                                        />
+                                    </View>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                }
+                        :
+                        <View style={{width:"100%", height:65, paddingTop:5, borderBottomWidth:1, borderColor:"#c7c5c1"}}>
+                            <View style={{marginHorizontal:15, flexDirection:'row',}}>
+                                <View style={{width:"20%"}}>
+                                    <View style={{width:50, height:50, borderRadius:50, backgroundColor:"#d1d1d1", alignItems:'center', justifyContent:'center'}}>
+                                        <Feather name="home" size={20} color="gray" />
+                                    </View>
+                                </View>
+                                <View style={{width:"80%"}}>
+                                    <TextInput
+                                        style={{fontSize:18}}
+                                        placeholder={title}
+                                        onChangeText={(text_title) => this.setState({text_title})}
+                                        value={this.state.text_title}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+                    }
+                    
+                    {
+                        title == "Add University" || title == "Add work place"?
+                        <View style={{width:"100%", height:50, paddingTop:10, borderBottomWidth:1, borderColor:"#c7c5c1"}}>
+                            {
+                                title == "Add University"?
+                                <View style={{paddingHorizontal:15, flexDirection:'row', justifyContent:'space-between'}}>
+                                    <Text style={{fontSize:18}}>Graduated</Text>
+                                    <View style={{ width: '15%', }}>
+                                        <SwitchToggle
+                                            containerStyle={styles.toggleButtonContainer}
+                                            circleStyle={styles.toggleButtonCircle}
+                                            switchOn={this.state.is_graduated}
+                                            backgroundColorOn='#82a4fa'
+                                            circleColorOn='#202ae6'
+                                            backgroundColorOff='gray'
+                                            circleColorOff='#d6d6d6'
+                                            onPress={this.toggleHandler}
+                                        />
+                                    </View>
+                                </View>
+                                :
+                                <View style={{paddingHorizontal:15, flexDirection:'row', justifyContent:'space-between'}}>
+                                    <Text style={{fontSize:18}}>Currently work here</Text>
+                                    <View style={{ width: '15%', }}>
+                                        <SwitchToggle
+                                            containerStyle={styles.toggleButtonContainer}
+                                            circleStyle={styles.toggleButtonCircle}
+                                            switchOn={this.state.is_working}
+                                            backgroundColorOn='#82a4fa'
+                                            circleColorOn='#202ae6'
+                                            backgroundColorOff='gray'
+                                            circleColorOff='#d6d6d6'
+                                            onPress={this.toggleHandler}
+                                        />
+                                    </View>
+                                </View>
+                            }
+                        </View>:<View></View>
+                    }
+                    {
+                        title == "Add Current City" || title == "Add Home Town"?<View></View>:
+                        <View>
+                            <View style={{width:"100%", height:60, paddingTop:10, borderBottomWidth:1, borderColor:"#c7c5c1"}}>
+                                <View style={{paddingHorizontal:15, flexDirection:'row', justifyContent:'space-between'}}>
+                                    <View>
+                                        <DatePicker
+                                            date={this.state.start_date}
+                                            mode="date"
+                                            maxDate={moment().format('YYYY-MM-DD')}
+                                            showIcon={true}
+                                            value={this.state.start_date}
+                                            placeholder="Start date"
+                                            format='YYYY-MM-DD'
+                                            confirmBtnText="Confirm"
+                                            cancelBtnText="Cancel"
+                                            allowFontScaling={false}
+                                            customStyles={
+                                            {
+                                                dateInput: {
+                                                borderWidth: 0,
+                                                alignItems: "flex-start",
+                                                paddingLeft: 5,
+                                                width: "80%",
+                                                },
+                                                placeholderText: {
+                                                fontSize: 14,
+                                                color: "#3F3F41",
+                                                fontFamily:'Montserrat-Regular',
+                                                },
+                                                dateText: {
+                                                fontSize: 14,
+                                                color: "#3F3F41",
+                                                fontFamily:"Montserrat-Regular",
+
+                                                },
+                                                datePicker: {
+                                                marginTop: 10,
+                                                borderTopWidth: 0
+                                                }
+                                            }
+                                            }
+                                            iconComponent={
+                                            <Feather name="calendar" size={25} style={[styles.imageIconStyle, {left:350, bottom:5}]}></Feather>
+                                            }
+                                            onDateChange={(start_date) => { this.setState({ start_date }) }}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                            <View  style={{height:70}}>
+                                {
+                                    this.state.is_working?<View></View>:
+                                    <View style={{width:"100%", height:60, paddingTop:10, borderBottomWidth:1, borderColor:"#c7c5c1"}}>
+                                        <View style={{paddingHorizontal:15, flexDirection:'row', justifyContent:'space-between'}}>
+                                            <View>
+                                                <DatePicker
+                                                    date={this.state.end_date}
+                                                    mode="date"
+                                                    maxDate={moment().format('YYYY-MM-DD')}
+                                                    showIcon={true}
+                                                    value={this.state.end_date}
+                                                    placeholder="End date"
+                                                    format='YYYY-MM-DD'
+                                                    confirmBtnText="Confirm"
+                                                    cancelBtnText="Cancel"
+                                                    allowFontScaling={false}
+                                                    customStyles={
+                                                    {
+                                                        dateInput: {
+                                                        borderWidth: 0,
+                                                        alignItems: "flex-start",
+                                                        paddingLeft: 5,
+                                                        width: "80%",
+                                                        },
+                                                        placeholderText: {
+                                                        fontSize: 14,
+                                                        color: "#3F3F41",
+                                                        fontFamily:'Montserrat-Regular',
+                                                        },
+                                                        dateText: {
+                                                        fontSize: 14,
+                                                        color: "#3F3F41",
+                                                        fontFamily:"Montserrat-Regular",
+
+                                                        },
+                                                        datePicker: {
+                                                        marginTop: 10,
+                                                        borderTopWidth: 0
+                                                        }
+                                                    }
+                                                    }
+                                                    iconComponent={
+                                                    <Feather name="calendar" size={25} style={[styles.imageIconStyle, {left:350, bottom:5}]}></Feather>
+                                                    }
+                                                    onDateChange={(end_date) => { this.setState({ end_date }) }}
+                                                />
+                                            </View>
+                                        </View>
+                                    </View>
+                                }
+                            </View>
+                        </View>
+                    }
                 </View>
-                <View style={{paddingHorizontal:20}}>
-                    <TouchableOpacity style={{height:40, width:"100%", backgroundColor:"blue", borderRadius:5, alignItems:'center', justifyContent:'center',marginTop:height-350}}>
+                <View style={{height:40, paddingHorizontal:20}}>
+                    <TouchableOpacity onPress={()=>{
+                        this.add_profiles(title),
+                        this.props.navigation.goBack(null);
+                        console.log('=====this', this)
+                    }} style={{height:40, width:"100%", backgroundColor:"blue", borderRadius:5, alignItems:'center', justifyContent:'center'}}>
                         <Text style={{color:"white"}}>Save</Text>
                     </TouchableOpacity>
                 </View>
@@ -169,23 +257,16 @@ class AddProfiles extends React.Component {
     }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     coverPicture:state.Profile.cover_picture_data,
-//     coverLoading:state.Profile.coverPicLoading,
-//     profilePicture:state.Profile.profile_picture_data,
-//     profileLoading:state.Profile.profilePicLoading
-//   }
-// }
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     coverImage: payload => dispatch(ProfileActions.uploadCoverPicture(payload)),
-//     getCover:payload => dispatch({type:ProfileActions.GET_COVER_PICTURE}),
-//     profileImage:payload => dispatch(ProfileActions.uploadProfilePicture(payload)),
-//     getProfile:payload => dispatch({type:ProfileActions.GET_PROFILE_PICTURE})
-//   }
-// }
+const mapStateToProps = (state) => {
+  return {
+   
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addWorkPlace: payload => dispatch(ProfileActions.addWorkPlace(payload)),
+    // getCover:payload => dispatch({type:ProfileActions.GET_COVER_PICTURE}),
+  }
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(AddProfiles)
-
-export default AddProfiles;
+export default connect(mapStateToProps, mapDispatchToProps)(AddProfiles)

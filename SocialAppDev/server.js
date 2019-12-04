@@ -4,9 +4,10 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const User = require('./api/routes/userRoute');
-const cover_pic = require('./api/routes/coverPictureRoute')
-const profile_pic = require('./api/routes/profilePictureRoute')
+const User = require('./api/routes/users/userRoute');
+const cover_pic = require('./api/routes/profiles/coverPictureRoute')
+const profile_pic = require('./api/routes/profiles/profilePictureRoute')
+const work_place = require('./api/routes/profiles/workPlaceRoute')
 
 app.use('/uploads',express.static("uploads"))
 
@@ -31,6 +32,7 @@ mongoose.connect('mongodb+srv://jalal:123@socialapp-wbe7k.mongodb.net/test?retry
 app.use('/user', User);
 app.use('/cover_pic', cover_pic)
 app.use('/profile_pic', profile_pic)
+app.use('/work_place', work_place)
 
 
 app.use((req, res, next)=> {
