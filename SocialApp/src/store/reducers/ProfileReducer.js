@@ -10,8 +10,12 @@ const INITIAL_STATE = {
     work_place_data:[],
     school_data:[],
     university_data:[],
-    home_town_data:[],
-    current_city_data:[]
+    home_town_data:{},
+    current_city_data:{},
+
+    upload_images_data:{},
+    uploadImageLoading:false
+
 
 };
 
@@ -81,6 +85,15 @@ function Reducer(state = INITIAL_STATE, action) {
          case ProfileActions.GET_HOME_TOWN_SUCCESS:
             return{
                 ...state, home_town_data:action.payload
+            }
+        case ProfileActions.GET_IMAGES:
+            return{
+                ...state, uploadImageLoading:true
+            }
+
+        case ProfileActions.GET_IMAGES_SUCCESS:
+            return{
+                ...state, upload_images_data:action.payload, uploadImageLoading:false
             }
 
         default:

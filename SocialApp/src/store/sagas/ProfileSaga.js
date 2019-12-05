@@ -165,7 +165,7 @@ export function* getCurrentCity(action) {
     const response = yield call(HttpService.getRequest, `current_city/get_current_city/${userId}`, { user_id: userId, access_token: token})
     console.log(response, "get current city")
     if(response && response.status == 200){
-        yield put({ type: ProfileActions.GET_CURRENT_CITY_SUCCESS, payload:response.data})
+        yield put({ type: ProfileActions.GET_CURRENT_CITY_SUCCESS, payload:response.data[0]})
     }
 }
 
@@ -192,7 +192,35 @@ export function* getHomeTown(action) {
     const response = yield call(HttpService.getRequest, `home_town/get_home_town/${userId}`, { user_id: userId, access_token: token})
     console.log(response, "get home town")
     if(response && response.status == 200){
-        yield put({ type: ProfileActions.GET_HOME_TOWN_SUCCESS, payload:response.data})
+        yield put({ type: ProfileActions.GET_HOME_TOWN_SUCCESS, payload:response.data[0]})
     }
 }
+
+//upload images
+export function* uploadImages(action) {
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    let { payload } = action;
+    let formData = new FormData();
+    formData.append("fileData",payload)
+    const response = yield call(HttpService.postRequest, "images/upload_images", { user_id: userId, access_token: token, "content-type": "multipart/form-data"},formData )
+    console.log(response, "upload images")
+    if(response && response.status == 200){
+        yield put ({type :ProfileActions.GET_IMAGES})
+    }
+}
+
+// get imagess
+export function* getImages(action) {
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    const response = yield call(HttpService.getRequest, `images/get_images/${userId}`, { user_id: userId, access_token: token, "content-type": "multipart/form-data"})
+    console.log(response, "get images")
+    if(response && response.status == 200){
+        yield put({ type: ProfileActions.GET_IMAGES_SUCCESS, payload:response.data})
+    }
+}
+
 

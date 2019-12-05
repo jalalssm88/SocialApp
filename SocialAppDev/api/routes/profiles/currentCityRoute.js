@@ -23,7 +23,7 @@ router.post('/add_current_city', (req, res, next)=>{
 
 router.get('/get_current_city/:id', (req, res, next)=>{
     const id = req.params.id;
-    console.log('user id in school', id)
+    console.log('get current city id', id)
     var query ={
         "user_id":id
     }
@@ -31,7 +31,7 @@ router.get('/get_current_city/:id', (req, res, next)=>{
     .select('_id user_id current_city')
     .exec()
     .then(doc => {
-        console.log('school ====', doc)
+        console.log('current city ====', doc)
         if(doc){
             res.status(200).json(doc)
         }else{

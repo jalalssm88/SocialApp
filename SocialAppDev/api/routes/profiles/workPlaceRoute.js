@@ -37,6 +37,7 @@ router.get('/get_work_place/:id', (req, res, next)=>{
     .exec()
     .then(doc => {
         console.log('work place ====', doc)
+        doc.reverse();
         if(doc){
             res.status(200).json(doc)
         }else{

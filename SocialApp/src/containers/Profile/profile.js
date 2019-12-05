@@ -18,78 +18,34 @@ class ProfileScreen extends React.Component {
       showModal:false,
       showModal2:false,
       showModal3:false,
-      summary:"dskdfj sdlfjskdlfj lksdfjsdlk sldkfjdslkfj sdlkfjds flkdsf dslkfjdsl k",
-      work_place:[
-        // {
-        //   id:1,
-        //   title:"React native developer",
-        //   company:"5StarDesigners",
-        //   job_status:true
-        // },
-        // {
-        //   id:1,
-        //   title:"Front end developer",
-        //   company:"BitsWits",
-        //   job_status:false
-        // },
-        // {
-        //   id:1,
-        //   title:"Call center agent",
-        //   company:"E-Data solution",
-        //   job_status:false
-        // }
-      ],
-      school:[
-        // {
-        //   id:2,
-        //   institude:"St.Patrick College, Karachi",
-        // },
-        // {
-        //   id:3,
-        //   institude:"Al Karim public school chitral",
-        //   school_status:false,
-        // }
-      ],
-      university:[
-        // {
-        //   id:2,
-        //   institude:"Preston University",
-        //   school_status:true,
-        // },
-        // {
-        //   id:3,
-        //   institude:"Al Karim public school chitral",
-        //   school_status:false,
-        // }
-      ],
-      current_city:"",
-      home_town:"",
+      showModal4:false,
+      // summary:"dskdfj sdlfjskdlfj lksdfjsdlk sldkfjdslkfj sdlkfjds flkdsf dslkfjdsl k",
       relationship_status:"",
       photos:[
-        {
-          id:1,
-          image:"https://www.gstatic.com/webp/gallery3/1.png"
-        },
-        {
-          id:2,
-          image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
-        },
-        {
-          id:3,
-          image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
-        },
-        {
-          id:4,
-          image:"https://www.gstatic.com/webp/gallery3/1.png"
-        },
-        {
-          id:5,
-          image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
-        },
-        {
-          id:6,
-          image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
-        },
+        // {
+        //   id:1,
+        //   image:"https://www.gstatic.com/webp/gallery3/1.png"
+        // },
+        // {
+        //   id:2,
+        //   image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
+        // },
+        // {
+        //   id:3,
+        //   image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
+        // },
+        // {
+        //   id:4,
+        //   image:"https://www.gstatic.com/webp/gallery3/1.png"
+        // },
+        // {
+        //   id:5,
+        //   image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
+        // },
+        // {
+        //   id:6,
+        //   image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
+        // },
       ],
       friends:[
         {
@@ -133,6 +89,9 @@ class ProfileScreen extends React.Component {
     this.getWorkPlace()
     this.getSchool()
     this.getUniversity()
+    this.getCurrentCity()
+    this.getHomeTown()
+    this.getImages()
   }
   
   getUser = () => {
@@ -200,6 +159,29 @@ class ProfileScreen extends React.Component {
     this.props.getProfile()
   }
 
+  // upload imagess
+  uploadImages = () => {ImagePicker.openPicker({
+    width: 400,
+    height: 430,
+    cropping: true,
+    multiple: false,
+    avoidEmptySpaceAroundImage: true
+  }).then(this.updateImages);
+  }
+
+  updateImages =(response) => {
+    console.log('heyyyyy image', response)
+    if (response.didCancel) {
+    } else if (response.error) {
+    } else {
+      const images = { image_url: response.path, uri: response.path, name: response.path.split("/")[response.path.split("/").length - 1], type: response.mime }
+      this.setState({
+        showModal4: false
+      })
+      this.props.uploadImage(images)
+    }
+  }
+
   getWorkPlace = ()=> {
     this.props.getWorkPlace()
   }
@@ -208,6 +190,15 @@ class ProfileScreen extends React.Component {
   }
   getUniversity = ()=> {
     this.props.getUniversity()
+  }
+  getCurrentCity =() => {
+    this.props.getCurrentCity()
+  }
+  getHomeTown =() => {
+    this.props.getHomeTown()
+  }
+  getImages =() => {
+    this.props.getImages()
   }
 
   toggleModal = ()=> {
@@ -225,15 +216,20 @@ class ProfileScreen extends React.Component {
       showModal3:!this.state.showModal3,
     })
   }
+  toggleModal4 = ()=> {
+    this.setState({
+      showModal4:!this.state.showModal4
+    })
+  }
   render() {
     const {first_name, last_name} = this.state
     const{coverPicture, coverLoading, profilePicture, profileLoading, workPlace, schoolData,
-    universityData, currentCity, homeTown} = this.props;
-    console.log('=============universityData', universityData)
+    universityData, currentCity, homeTown, uploadImagesData, imageLoading} = this.props;
+    console.log('============uploadImagesData==========', uploadImagesData)
     return (
       <ScrollView>
         {
-          coverLoading && profileLoading? <View style={{width:width, height:height, backgroundColor:"rgba(0, 0, 0, 0.2);"}}><Spinner style={{marginTop:300}} color="red" /></View>:
+          coverLoading && profileLoading && imageLoading? <View style={{width:width, height:height, backgroundColor:"rgba(0, 0, 0, 0.2);"}}><Spinner style={{marginTop:300}} color="red" /></View>:
           <View style={{width:'100%', paddingHorizontal:20, paddingTop:10}}>
             
               <View style={{width:'100%', height:250, backgroundColor:"#dcdede"}}>
@@ -275,10 +271,10 @@ class ProfileScreen extends React.Component {
               
               <View style={{width:"100%",paddingTop:20}}>
                 {/* work place */}
-                <View >
+                <View style={{marginBottom:10}}>
                   {
                     workPlace.length?
-                    <View>
+                    <View> 
                       <FlatList
                         data={workPlace}
                         renderItem={({ item }) => 
@@ -290,10 +286,10 @@ class ProfileScreen extends React.Component {
                               {
                                 item.is_working?
                                 <TouchableOpacity onPress={()=>{this.props.navigation.navigate("AddProfiles", {title:"Add work place"})}}>
-                                  <Text style={{fontSize:18}}>Working at <Text style={{fontWeight:'bold'}}>{item.work_place}</Text></Text>
+                                  <Text style={{fontSize:16}}>Working at <Text style={{fontWeight:'bold'}}>{item.work_place}</Text></Text>
                                 </TouchableOpacity>:
                                 <TouchableOpacity onPress={()=>{this.props.navigation.navigate("AddProfiles", {title:"Add work place"})}}>
-                                  <Text style={{fontSize:18}}>Former {item.job_title} <Text style={{fontWeight:'bold'}}>{item.work_place}</Text></Text>
+                                  <Text style={{fontSize:16}}>Former {item.job_title} <Text style={{fontWeight:'bold'}}>{item.work_place}</Text></Text>
                                 </TouchableOpacity>
                               }
                             </View>
@@ -303,7 +299,7 @@ class ProfileScreen extends React.Component {
                       />
                     </View>:
                     <View>
-                      <View style={{flexDirection:'row', marginBottom:10, height:45}}>
+                      <View style={{flexDirection:'row'}}>
                           <View style={{width:'10%'}}>
                             <Feather name="archive" color="black" size={25} ></Feather>
                           </View>
@@ -318,14 +314,14 @@ class ProfileScreen extends React.Component {
                 </View>
                 
                 {/* university */}
-                <View >
+                <View style={{marginBottom:10}}>
                   {
                     universityData.length || schoolData.length?
-                    <View>
+                    <View style={{marginTop:-5, marginBottom:-7}}>
                       <FlatList
                         data={universityData}
                         renderItem={({ item }) => 
-                          <View style={{flexDirection:'row',height:45}}>
+                          <View style={{flexDirection:'row',height:45,}}>
                             <View style={{width:'10%',justifyContent:'center'}}>
                               <Feather name="layers" color="black" size={25} ></Feather>
                             </View>
@@ -333,10 +329,10 @@ class ProfileScreen extends React.Component {
                               {
                                 item.is_graduated?
                                 <TouchableOpacity onPress={this.toggleModal3}>
-                                  <Text style={{fontSize:18}}>Studied at <Text style={{fontWeight:'bold'}}>{item.university}</Text></Text>
+                                  <Text style={{fontSize:16}}>Studied at <Text style={{fontWeight:'bold'}}>{item.university}</Text></Text>
                                 </TouchableOpacity>:
                                 <TouchableOpacity onPress={this.toggleModal3}>
-                                  <Text style={{fontSize:18}}>Studies at <Text style={{fontWeight:'bold'}}>{item.university}</Text></Text>
+                                  <Text style={{fontSize:16}}>Studies at <Text style={{fontWeight:'bold'}}>{item.university}</Text></Text>
                                 </TouchableOpacity>
                               }
                             </View>
@@ -345,8 +341,7 @@ class ProfileScreen extends React.Component {
                         keyExtractor={item => item._id}
                       />
                     </View>:
-                    <View>
-                      <View style={{flexDirection:'row',}}>
+                      <View style={{flexDirection:'row',marginBottom:-7}}>
                           <View style={{width:'10%'}}>
                             <Feather name="layers" color="black" size={25} ></Feather>
                           </View>
@@ -356,12 +351,11 @@ class ProfileScreen extends React.Component {
                             </TouchableOpacity>
                           </View>
                         </View>
-                    </View>
                   }
                 </View>
 
                 {/* school */}
-                <View >
+                <View style={{marginBottom:10}}>
                   {
                     schoolData.length?
                     <View>
@@ -374,7 +368,7 @@ class ProfileScreen extends React.Component {
                             </View>
                             <View style={{width:'90%', justifyContent:'center'}}>
                               <TouchableOpacity onPress={this.toggleModal3}>
-                                <Text style={{fontSize:18}}>Went to <Text style={{fontWeight:'bold'}}>{item.school}</Text></Text>
+                                <Text style={{fontSize:16}}>Went to <Text style={{fontWeight:'bold'}}>{item.school}</Text></Text>
                               </TouchableOpacity>
                             </View>
                           </View>
@@ -391,19 +385,19 @@ class ProfileScreen extends React.Component {
                 {/* current city */}
                 <View style={{paddingBottom:10,}}>
                   {
-                    currentCity.length?
-                      <View style={{flexDirection:'row',}}>
+                    currentCity !== "" && currentCity !== undefined?
+                      <View style={{flexDirection:'row',height:30}}>
                         <View style={{width:'10%'}}>
                           <Feather name="map-pin" color="black" size={25} ></Feather>
                         </View>
                         <View style={{width:'90%'}}>
                           {
-                            <Text style={{fontSize:18}}>Lives in <Text style={{fontWeight:'bold'}}>{currentCity.current_city}</Text></Text>
+                            <Text style={{fontSize:16}}>Lives in <Text style={{fontWeight:'bold'}}>{currentCity.current_city}</Text></Text>
                           }
                         </View>
                     </View>:
                     <View>
-                      <View style={{flexDirection:'row',}}>
+                      <View style={{flexDirection:'row', height:30}}>
                           <View style={{width:'10%'}}>
                             <Feather name="map-pin" color="black" size={25} ></Feather>
                           </View>
@@ -420,14 +414,17 @@ class ProfileScreen extends React.Component {
                 {/* Home town*/}
                 <View style={{paddingBottom:10}}>
                   {
-                    homeTown.length?
-                      <View style={{flexDirection:'row',}}>
+                    console.log("home=======", homeTown)
+                  }
+                  {
+                    homeTown !=="" && homeTown !== undefined?
+                      <View style={{flexDirection:'row', height:30}}>
                         <View style={{width:'10%'}}>
                           <Feather name="map-pin" color="black" size={25} ></Feather>
                         </View>
                         <View style={{width:'90%'}}>
                           {
-                            <Text style={{fontSize:18}}>From <Text style={{fontWeight:'bold'}}>{homeTown.home_town}</Text></Text>
+                            <Text style={{fontSize:16}}>From <Text style={{fontWeight:'bold'}}>{homeTown.home_town}</Text></Text>
                           }
                         </View>
                     </View>:
@@ -482,14 +479,14 @@ class ProfileScreen extends React.Component {
               {/* photos container */}
               <View style={{width:"100%", marginTop:20, paddingTop:10, borderTopWidth:1,borderBottomWidth:1,borderColor:"gray"}}>
                 {
-                  this.state.photos.length?
-                  <View >
+                  uploadImagesData.length?
+                  <TouchableOpacity onPress={this.toggleModal4} >
                     <FlatList
-                        data={this.state.photos}
+                        data={uploadImagesData}
                         renderItem={({ item }) => 
                         <View style={{width:"33.3%"}}>
                           <View style={{width:"90%",}}>
-                            <Image source={require('../../images/images22.jpg')} style={{height:100, width:"100%",marginTop:10, borderRadius:10, marginLeft:3 }}  />
+                            <Image source={{uri:item.upload_image}} style={{height:100, width:"100%",marginTop:10, borderRadius:10, marginLeft:3 }}  />
                           </View>
                           <View style={{width:"100%"}}>
                             <Text style={{fontSize:18, marginLeft:6}}>{item.name}</Text>
@@ -499,10 +496,10 @@ class ProfileScreen extends React.Component {
                         keyExtractor={item => item.id}
                         numColumns={3}
                       />
-                  </View>:
+                  </TouchableOpacity>:
                   <View style={{borderTopWidth:1,borderBottomWidth:1, alignItems:'center', borderColor:"gray", width:"100%", justifyContent:"space-between", marginBottom:20, flexDirection:"row", height:80,}}>
                     <Text style={{fontSize:18, fontWeight:"bold"}}>Photos</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={this.toggleModal4}>
                       <Text style={{fontSize:18, fontWeight:"bold", color:"blue"}}>Add Photos</Text>
                     </TouchableOpacity>
                   </View>
@@ -617,6 +614,23 @@ class ProfileScreen extends React.Component {
                   </View>
                 </View>
               </Modal>
+
+              <Modal
+                visible={this.state.showModal4}
+                onRequestClose={this.toggleModal4}
+                transparent>
+                <View style={{ height, width }} >
+                  <TouchableOpacity activeOpacity={1} onPress={this.toggleModal4} style={{ height: "50%", backgroundColor: "rgba(255,255,255,0.9)", width: "100%" }} >
+                  </TouchableOpacity>
+                  <View style={{ height: "50%", backgroundColor: "#8721FD", width: "100%", borderTopRightRadius: 20, borderTopLeftRadius: 20, justifyContent: "space-evenly", alignItems: "center", paddingHorizontal: 10 }} >
+                    <View style={{ height: 8, width: 45, backgroundColor: "white", borderRadius: 8 }}></View>
+                    <Text style={{ fontSize:18,fontFamily:'Montserrat-Regular',textAlign:"center",color:"#FFFFFF"}}>Choose From</Text>
+                    <TouchableOpacity onPress={this.uploadImages} style={{width:"70%", height:50, backgroundColor: "white", color: "#8721FD", fontSize: 17, borderRadius:10, alignItems:'center', justifyContent:'center', flexDirection:'row'}}><Image style={{height:20, width:20}} source={require("../../images/Gallery.png")} /><Text style={{fontSize:16, marginLeft:10}}>Gallery</Text></TouchableOpacity>
+                    <Text style={{ fontSize:16,fontFamily:'Montserrat-Regular',textAlign:"center",color:"#FFFFFF"}}>OR</Text>
+                    <TouchableOpacity style={{width:"70%", height:45, borderWidth:2, borderColor:'white', fontSize: 17, borderRadius:10, alignItems:'center', justifyContent:'center', flexDirection:'row'}}><Image  style={{height:20, width:20}} source={require("../../images/Camera_white.png")} /><Text style={{fontSize:16, marginLeft:10, color:"white"}}>Camera</Text></TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
           </View>
         }
       </ScrollView>
@@ -636,7 +650,10 @@ const mapStateToProps = (state) => {
     schoolData:state.Profile.school_data,
     universityData:state.Profile.university_data,
     currentCity:state.Profile.current_city_data,
-    homeTown:state.Profile.home_town_data
+    homeTown:state.Profile.home_town_data,
+
+    uploadImagesData:state.Profile.upload_images_data,
+    imageLoading:state.Profile.uploadImageLoading
 
   }
 }
@@ -646,10 +663,14 @@ const mapDispatchToProps = (dispatch) => {
     getCover:payload => dispatch({type:ProfileActions.GET_COVER_PICTURE}),
     profileImage:payload => dispatch(ProfileActions.uploadProfilePicture(payload)),
     getProfile:payload => dispatch({type:ProfileActions.GET_PROFILE_PICTURE}),
+    uploadImage:payload => dispatch(ProfileActions.uploadImages(payload)),
+    getImages:payload => dispatch({type:ProfileActions.GET_IMAGES}),
 
     getWorkPlace:payload => dispatch({type:ProfileActions.GET_WORK_PLACE}),
     getSchool:payload => dispatch({type:ProfileActions.GET_SCHOOL}),
     getUniversity:payload => dispatch({type:ProfileActions.GET_UNIVERSITY}),
+    getCurrentCity:payload => dispatch({type:ProfileActions.GET_CURRENT_CITY}),
+    getHomeTown:payload => dispatch({type:ProfileActions.GET_HOME_TOWN}),
   }
 }
 

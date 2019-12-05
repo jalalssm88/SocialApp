@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const HomeTown = require('../../models/profiles/homeTownModel');
-router.post('/add_current_city', (req, res, next)=>{
+router.post('/add_home_town', (req, res, next)=>{
     const new_home_town = new HomeTown({
         user_id:req.headers.user_id,
         home_town:req.body.home_town,
@@ -21,9 +21,9 @@ router.post('/add_current_city', (req, res, next)=>{
     })
 });
 
-router.get('/get_current_city/:id', (req, res, next)=>{
+router.get('/get_home_town/:id', (req, res, next)=>{
     const id = req.params.id;
-    console.log('user id in school', id)
+    console.log('user id in home town', id)
     var query ={
         "user_id":id
     }
@@ -31,7 +31,7 @@ router.get('/get_current_city/:id', (req, res, next)=>{
     .select('_id user_id home_town')
     .exec()
     .then(doc => {
-        console.log('school ====', doc)
+        console.log('home town ====', doc)
         if(doc){
             res.status(200).json(doc)
         }else{

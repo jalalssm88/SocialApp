@@ -34,6 +34,7 @@ router.get('/get_school/:id', (req, res, next)=>{
     .exec()
     .then(doc => {
         console.log('school ====', doc)
+        doc.reverse()
         if(doc){
             res.status(200).json(doc)
         }else{
