@@ -10,6 +10,8 @@ const profile_pic = require('./api/routes/profiles/profilePictureRoute')
 const work_place = require('./api/routes/profiles/workPlaceRoute')
 const school = require('./api/routes/profiles/schoolRoute')
 const university = require('./api/routes/profiles/universityRoute')
+const current_city = require('./api/routes/profiles/currentCityRoute')
+const home_town = require('./api/routes/profiles/homeTownRoute')
 
 app.use('/uploads',express.static("uploads"))
 
@@ -17,17 +19,17 @@ app.use('/uploads',express.static("uploads"))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb+srv://jalal:123@socialapp-wbe7k.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser:true, useUnifiedTopology:true}, ()=>{
-    console.log('mongo db connected');
-})
-
-
-// mongoose.connect('mongodb://localhost/job_searching_app', {useNewUrlParser:true})
-// const db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error'))
-// db.once('open', function(){
-//     console.log('db connected')
+// mongoose.connect('mongodb+srv://jalal:123@socialapp-wbe7k.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser:true, useUnifiedTopology:true}, ()=>{
+//     console.log('mongo db connected');
 // })
+
+
+mongoose.connect('mongodb://localhost/socialApp', {useNewUrlParser:true})
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error'))
+db.once('open', function(){
+    console.log('db connected')
+})
 
 // Use Routes
 
@@ -37,6 +39,8 @@ app.use('/profile_pic', profile_pic)
 app.use('/work_place', work_place)
 app.use('/school', school)
 app.use('/university', university)
+app.use('/current_city', current_city)
+app.use('/home_town', home_town)
 
 
 app.use((req, res, next)=> {

@@ -43,6 +43,11 @@ class AddProfiles extends React.Component {
             this.props.addSchool({school:text_title, class_year:class_year})
         }else if(type == "Add University"){
             this.props.addUniversity({university:text_title, start_date:start_date, end_date:end_date, is_graduated:is_graduated})
+        }else if(type == "Add Current City"){
+            console.log('i am here')
+            this.props.addCurrentCity({current_city:text_title})
+        }else if(type == "Add Home Town"){
+            this.props.addHomeTown({home_town:text_title})
         }
     }
 
@@ -300,7 +305,6 @@ class AddProfiles extends React.Component {
                     <TouchableOpacity onPress={()=>{
                         this.add_profiles(title),
                         this.props.navigation.goBack(null);
-                        console.log('=====this', this)
                     }} style={{height:40, width:"100%", backgroundColor:"blue", borderRadius:5, alignItems:'center', justifyContent:'center'}}>
                         <Text style={{color:"white"}}>Save</Text>
                     </TouchableOpacity>
@@ -319,8 +323,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addWorkPlace: payload => dispatch(ProfileActions.addWorkPlace(payload)),
     addSchool:payload => dispatch(ProfileActions.addSchool(payload)),
-    addUniversity:payload => dispatch(ProfileActions.addUniversity(payload))
-    // getCover:payload => dispatch({type:ProfileActions.GET_COVER_PICTURE}),
+    addUniversity:payload => dispatch(ProfileActions.addUniversity(payload)),
+    addCurrentCity:payload => dispatch(ProfileActions.addCurrentCity(payload)),
+    addHomeTown:payload => dispatch(ProfileActions.addHomeTown(payload))
   }
 }
 

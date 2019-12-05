@@ -227,7 +227,8 @@ class ProfileScreen extends React.Component {
   }
   render() {
     const {first_name, last_name} = this.state
-    const{coverPicture, coverLoading, profilePicture, profileLoading, workPlace, schoolData, universityData} = this.props;
+    const{coverPicture, coverLoading, profilePicture, profileLoading, workPlace, schoolData,
+    universityData, currentCity, homeTown} = this.props;
     console.log('=============universityData', universityData)
     return (
       <ScrollView>
@@ -302,7 +303,7 @@ class ProfileScreen extends React.Component {
                       />
                     </View>:
                     <View>
-                      <View style={{flexDirection:'row', marginBottom:10, backgroundColor:'red', height:45}}>
+                      <View style={{flexDirection:'row', marginBottom:10, height:45}}>
                           <View style={{width:'10%'}}>
                             <Feather name="archive" color="black" size={25} ></Feather>
                           </View>
@@ -390,14 +391,14 @@ class ProfileScreen extends React.Component {
                 {/* current city */}
                 <View style={{paddingBottom:10,}}>
                   {
-                    this.state.current_city?
+                    currentCity.length?
                       <View style={{flexDirection:'row',}}>
                         <View style={{width:'10%'}}>
                           <Feather name="map-pin" color="black" size={25} ></Feather>
                         </View>
                         <View style={{width:'90%'}}>
                           {
-                            <Text style={{fontSize:18}}>Lives in <Text style={{fontWeight:'bold'}}>{this.state.current_city}</Text></Text>
+                            <Text style={{fontSize:18}}>Lives in <Text style={{fontWeight:'bold'}}>{currentCity.current_city}</Text></Text>
                           }
                         </View>
                     </View>:
@@ -419,14 +420,14 @@ class ProfileScreen extends React.Component {
                 {/* Home town*/}
                 <View style={{paddingBottom:10}}>
                   {
-                    this.state.home_town?
+                    homeTown.length?
                       <View style={{flexDirection:'row',}}>
                         <View style={{width:'10%'}}>
                           <Feather name="map-pin" color="black" size={25} ></Feather>
                         </View>
                         <View style={{width:'90%'}}>
                           {
-                            <Text style={{fontSize:18}}>From <Text style={{fontWeight:'bold'}}>{this.state.home_town}</Text></Text>
+                            <Text style={{fontSize:18}}>From <Text style={{fontWeight:'bold'}}>{homeTown.home_town}</Text></Text>
                           }
                         </View>
                     </View>:
@@ -634,6 +635,8 @@ const mapStateToProps = (state) => {
     workPlace:state.Profile.work_place_data,
     schoolData:state.Profile.school_data,
     universityData:state.Profile.university_data,
+    currentCity:state.Profile.current_city_data,
+    homeTown:state.Profile.home_town_data
 
   }
 }

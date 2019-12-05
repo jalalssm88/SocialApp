@@ -23,11 +23,24 @@ export default class Action {
     static GET_SCHOOL = "GET_SCHOOL"
     static GET_SCHOOL_SUCCESS = "GET_SCHOOL_SUCCESS"
 
-    // Add school
+    // Add university
     static ADD_UNIVERSITY = "ADD_UNIVERSITY"
     static ADD_UNIVERSITY_SUCCESS = "ADD_UNIVERSITY_SUCCESS"
     static GET_UNIVERSITY = "GET_UNIVERSITY"
     static GET_UNIVERSITY_SUCCESS = "GET_UNIVERSITY_SUCCESS"
+
+    // Add current city
+    static ADD_CURRENT_CITY = "ADD_CURRENT_CITY"
+    static ADD_CURRENT_CITY_SUCCESS = "ADD_CURRENT_CITY_SUCCESS"
+    static GET_CURRENT_CITY = "GET_CURRENT_CITY"
+    static GET_CURRENT_CITY_SUCCESS = "GET_CURRENT_CITY_SUCCESS"
+
+    // Add home town
+    static ADD_HOME_TOWN = "ADD_HOME_TOWN"
+    static ADD_HOME_TOWN_SUCCESS = "ADD_HOME_TOWN_SUCCESS"
+    static GET_HOME_TOWN = "GET_HOME_TOWN"
+    static GET_HOME_TOWN_SUCCESS = "GET_HOME_TOWN_SUCCESS"
+
 
     // upload cover picture
     static uploadCoverPicture(payload) {
@@ -95,6 +108,34 @@ export default class Action {
     static getUniversity(payload) {
         return {
             type: Action.GET_UNIVERSITY,
+            payload
+        };
+    }
+
+    //add current city
+    static addCurrentCity(payload) {
+        return {
+            type: Action.ADD_CURRENT_CITY,
+            payload
+        };
+    }
+    static getCurrentCity(payload) {
+        return {
+            type: Action.GET_CURRENT_CITY,
+            payload
+        };
+    }
+
+    //add home town 
+    static addHomeTown(payload) {
+        return {
+            type: Action.ADD_HOME_TOWN,
+            payload
+        };
+    }
+    static getHomeTown(payload) {
+        return {
+            type: Action.GET_HOME_TOWN,
             payload
         };
     }

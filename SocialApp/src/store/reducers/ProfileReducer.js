@@ -10,6 +10,8 @@ const INITIAL_STATE = {
     work_place_data:[],
     school_data:[],
     university_data:[],
+    home_town_data:[],
+    current_city_data:[]
 
 };
 
@@ -68,6 +70,17 @@ function Reducer(state = INITIAL_STATE, action) {
         case ProfileActions.GET_UNIVERSITY_SUCCESS:
             return{
                 ...state, university_data:action.payload
+            }
+
+         // current city cases
+         case ProfileActions.GET_CURRENT_CITY_SUCCESS:
+            return{
+                ...state, current_city_data:action.payload
+            }
+         // home town cases
+         case ProfileActions.GET_HOME_TOWN_SUCCESS:
+            return{
+                ...state, home_town_data:action.payload
             }
 
         default:

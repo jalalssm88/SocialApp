@@ -142,3 +142,57 @@ export function* getUniversity(action) {
     }
 }
 
+// add current city
+export function* addCurrentCity(action){
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    let { payload } = action;
+    console.log('payloaddd in saga', payload)
+   
+    const response = yield call(HttpService.postRequest, "current_city/add_current_city", { user_id: userId, access_token: token},{...payload} )
+    console.log(response, "add current city")
+    if(response && response.status == 200){
+        yield put ({type :ProfileActions.GET_CURRENT_CITY})
+    }
+}
+
+// get get current city
+export function* getCurrentCity(action) {
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    const response = yield call(HttpService.getRequest, `current_city/get_current_city/${userId}`, { user_id: userId, access_token: token})
+    console.log(response, "get current city")
+    if(response && response.status == 200){
+        yield put({ type: ProfileActions.GET_CURRENT_CITY_SUCCESS, payload:response.data})
+    }
+}
+
+// add home town
+export function* addHomeTown(action){
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    let { payload } = action;
+    console.log('payloaddd in saga', payload)
+   
+    const response = yield call(HttpService.postRequest, "home_town/add_home_town", { user_id: userId, access_token: token},{...payload} )
+    console.log(response, "add home town")
+    if(response && response.status == 200){
+        yield put ({type :ProfileActions.GET_HOME_TOWN})
+    }
+}
+
+// get homw town
+export function* getHomeTown(action) {
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    const response = yield call(HttpService.getRequest, `home_town/get_home_town/${userId}`, { user_id: userId, access_token: token})
+    console.log(response, "get home town")
+    if(response && response.status == 200){
+        yield put({ type: ProfileActions.GET_HOME_TOWN_SUCCESS, payload:response.data})
+    }
+}
+
