@@ -5,7 +5,7 @@ import { all, takeEvery } from 'redux-saga/effects';
 import { signupUser, loginUser } from "./AuthSaga";
 import { uploadCoverPicture, getCoverPicture, uploadProfilePicture, getProfilePicture, addWorkPlace, getWorkPlace,
     addSchool, getSchool, addUniversity, getUniversity, addCurrentCity, getCurrentCity, addHomeTown, getHomeTown,
-    uploadImages, getImages
+    uploadImages, getImages, getAllImages
 } from './ProfileSaga';
 import { AuthActions, ProfileActions } from '../actions/';
 
@@ -40,6 +40,9 @@ export function* rootSaga() {
 
         takeEvery(ProfileActions.ADD_IMAGES, uploadImages),
         takeEvery(ProfileActions.GET_IMAGES, getImages),
+
+        takeEvery(ProfileActions.GET_ALL_IMAGES, getAllImages),
+
 
     ]);
 };

@@ -14,7 +14,9 @@ const INITIAL_STATE = {
     current_city_data:{},
 
     upload_images_data:{},
-    uploadImageLoading:false
+    uploadImageLoading:false,
+
+    all_images_data:[]
 
 
 };
@@ -86,6 +88,8 @@ function Reducer(state = INITIAL_STATE, action) {
             return{
                 ...state, home_town_data:action.payload
             }
+        
+        // upload images cases
         case ProfileActions.GET_IMAGES:
             return{
                 ...state, uploadImageLoading:true
@@ -94,6 +98,13 @@ function Reducer(state = INITIAL_STATE, action) {
         case ProfileActions.GET_IMAGES_SUCCESS:
             return{
                 ...state, upload_images_data:action.payload, uploadImageLoading:false
+            }
+
+        // get all images cases
+
+        case ProfileActions.GET_ALL_IMAGES_SUCCESS:
+            return{
+                ...state, all_images_data:action.payload
             }
 
         default:

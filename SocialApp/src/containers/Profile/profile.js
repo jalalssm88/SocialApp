@@ -480,7 +480,7 @@ class ProfileScreen extends React.Component {
               <View style={{width:"100%", marginTop:20, paddingTop:10, borderTopWidth:1,borderBottomWidth:1,borderColor:"gray"}}>
                 {
                   uploadImagesData.length?
-                  <TouchableOpacity onPress={this.toggleModal4} >
+                  <View >
                     <FlatList
                         data={uploadImagesData}
                         renderItem={({ item }) => 
@@ -496,18 +496,23 @@ class ProfileScreen extends React.Component {
                         keyExtractor={item => item.id}
                         numColumns={3}
                       />
-                  </TouchableOpacity>:
+                  </View>:
                   <View style={{borderTopWidth:1,borderBottomWidth:1, alignItems:'center', borderColor:"gray", width:"100%", justifyContent:"space-between", marginBottom:20, flexDirection:"row", height:80,}}>
                     <Text style={{fontSize:18, fontWeight:"bold"}}>Photos</Text>
-                    <TouchableOpacity onPress={this.toggleModal4}>
+                    <TouchableOpacity onPress={()=>{
+                      this.props.navigation.navigate("ViewPhotos", {full_nme:`${first_name} ${last_name}`, from_add_photos:true})
+                    }} >
                       <Text style={{fontSize:18, fontWeight:"bold", color:"blue"}}>Add Photos</Text>
                     </TouchableOpacity>
                   </View>
                 }
                 {
-                  this.state.photos.length?
-                  <TouchableOpacity style={{width:"100%", marginBottom:20, height:30, backgroundColor:"rgba(0,0,0, 0.2)", alignItems:"center", justifyContent:"center", borderRadius:5,}}>
-                    <Text>see all photos</Text>
+                  uploadImagesData.length?
+                  <TouchableOpacity onPress={()=>{
+                      this.props.navigation.navigate("ViewPhotos", {full_nme:`${first_name} ${last_name}`,from_add_photos:false, user_id:uploadImagesData[0].user_id})
+                    }} 
+                    style={{width:"100%", marginBottom:20, height:30, backgroundColor:"rgba(0,0,0, 0.2)", alignItems:"center", justifyContent:"center", borderRadius:5,}}>
+                      <Text>see all photos</Text>
                   </TouchableOpacity>:
                   <View></View>
                 }

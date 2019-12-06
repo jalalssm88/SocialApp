@@ -208,6 +208,7 @@ export function* uploadImages(action) {
     console.log(response, "upload images")
     if(response && response.status == 200){
         yield put ({type :ProfileActions.GET_IMAGES})
+        yield put ({type:ProfileActions.GET_ALL_IMAGES})
     }
 }
 
@@ -220,6 +221,26 @@ export function* getImages(action) {
     console.log(response, "get images")
     if(response && response.status == 200){
         yield put({ type: ProfileActions.GET_IMAGES_SUCCESS, payload:response.data})
+    }
+}
+
+// get all imagess
+export function* getAllImages(action) {
+    let {payload} = action
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    let new_user_id = ""
+    if(payload == undefined){
+        new_user_id = userId
+    }else{
+        new_user_id = payload
+    }
+    console.log('new idddddd', new_user_id)
+    const response = yield call(HttpService.getRequest, `images/get_all_images/${new_user_id}`, { user_id: userId, access_token: token, "content-type": "multipart/form-data"})
+    console.log(response, "get images")
+    if(response && response.status == 200){
+        yield put({ type: ProfileActions.GET_ALL_IMAGES_SUCCESS, payload:response.data})
     }
 }
 

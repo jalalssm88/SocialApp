@@ -74,8 +74,15 @@ router.get('/get_images/:id', (req, res, next)=>{
     .select('_id user_id upload_image')
     .exec()
     .then(doc => {
+        var last_six;
+        if(doc.length >6){
+          last_six = doc.slice(-6);
+        }else{
+          last_six = doc
+        }
+
         if(doc){
-            res.status(200).json(doc)
+            res.status(200).json(last_six)
         }else{
             res.status(404).json({
                 message: "no data found against this id",
@@ -87,6 +94,31 @@ router.get('/get_images/:id', (req, res, next)=>{
             error: err
         })
     })
+});
+
+router.get('/get_all_images/:id', (req, res, next)=>{
+  const id = req.params.id;
+  console.log('id in get images pic', id)
+  var query ={
+      "user_id":id
+  }
+  uploadImages.find (query) 
+  .select('_id user_id upload_image')
+  .exec()
+  .then(doc => {
+      if(doc){
+          res.status(200).json(doc)
+      }else{
+          res.status(404).json({
+              message: "no data found against this id",
+          })
+      }
+  })
+  .catch(err => {
+      res.status(500).json({
+          error: err
+      })
+  })
 });
 
 module.exports = router;

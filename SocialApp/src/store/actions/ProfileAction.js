@@ -41,9 +41,16 @@ export default class Action {
     static GET_HOME_TOWN = "GET_HOME_TOWN"
     static GET_HOME_TOWN_SUCCESS = "GET_HOME_TOWN_SUCCESS"
 
+    // add images
     static ADD_IMAGES = "ADD_IMAGES"
     static GET_IMAGES = "GET_IMAGES"
     static GET_IMAGES_SUCCESS = "GET_IMAGES_SUCCESS"
+
+    // get all images
+    static GET_ALL_IMAGES = "GET_ALL_IMAGES"
+    static GET_ALL_IMAGES_SUCCESS = "GET_ALL_IMAGES_SUCCESS"
+
+
 
     // upload cover picture
     static uploadCoverPicture(payload) {
@@ -154,6 +161,15 @@ export default class Action {
     static getImages(payload) {
         return {
             type: Action.GET_IMAGES,
+            payload
+        };
+    }
+
+    // get all images
+
+    static getAllImages(payload) {
+        return {
+            type: Action.GET_ALL_IMAGES,
             payload
         };
     }
