@@ -11,10 +11,6 @@ import moment from 'moment'
 import SwitchToggle from 'react-native-switch-toggle';
 // import styles from './Style'
 
-
-
-
-
 class ViewPhotos extends React.Component {
     constructor(props){
         super(props);

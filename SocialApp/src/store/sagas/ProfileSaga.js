@@ -238,9 +238,24 @@ export function* getAllImages(action) {
     }
     console.log('new idddddd', new_user_id)
     const response = yield call(HttpService.getRequest, `images/get_all_images/${new_user_id}`, { user_id: userId, access_token: token, "content-type": "multipart/form-data"})
-    console.log(response, "get images")
+    console.log(response, "get all images")
     if(response && response.status == 200){
         yield put({ type: ProfileActions.GET_ALL_IMAGES_SUCCESS, payload:response.data})
+    }
+}
+
+// get users
+export function* getUsers(action) {
+    console.log('geting users in sagagagagaga')
+
+    let {payload} = action
+    let user = yield select(getUser);
+    let userId = user.userId;
+    let token = user.token;
+    const response = yield call(HttpService.getRequest, `user/users`, { user_id: userId, access_token: token, "content-type": "multipart/form-data"})
+    console.log(response, "get users")
+    if(response && response.status == 200){
+        yield put({ type: ProfileActions.GET_USERS_SUCCESS, payload:response.data})
     }
 }
 

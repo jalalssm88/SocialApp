@@ -21,66 +21,40 @@ class ProfileScreen extends React.Component {
       showModal4:false,
       // summary:"dskdfj sdlfjskdlfj lksdfjsdlk sldkfjdslkfj sdlkfjds flkdsf dslkfjdsl k",
       relationship_status:"",
-      photos:[
+      friends:[
         // {
         //   id:1,
+        //   name:"umar",
+        //   color:"red",
         //   image:"https://www.gstatic.com/webp/gallery3/1.png"
         // },
         // {
         //   id:2,
+        //   name:"jalal ",
+        //   color:"blue",
         //   image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
         // },
         // {
         //   id:3,
+        //   name:"fahad",
+        //   color:"green",
         //   image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
         // },
         // {
         //   id:4,
+        //   name:"musbah",
         //   image:"https://www.gstatic.com/webp/gallery3/1.png"
         // },
         // {
         //   id:5,
+        //   name:"jalal uddin",
         //   image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
         // },
         // {
         //   id:6,
+        //   name:"rafay",
         //   image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
         // },
-      ],
-      friends:[
-        {
-          id:1,
-          name:"umar",
-          color:"red",
-          image:"https://www.gstatic.com/webp/gallery3/1.png"
-        },
-        {
-          id:2,
-          name:"jalal ",
-          color:"blue",
-          image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
-        },
-        {
-          id:3,
-          name:"fahad",
-          color:"green",
-          image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
-        },
-        {
-          id:4,
-          name:"musbah",
-          image:"https://www.gstatic.com/webp/gallery3/1.png"
-        },
-        {
-          id:5,
-          name:"jalal uddin",
-          image:"https://www.gstatic.com/webp/gallery3/2_webp_ll.png"
-        },
-        {
-          id:6,
-          name:"rafay",
-          image:"https://www.gstatic.com/webp/gallery3/3_webp_ll.png"
-        },
       ]
     }
     this.getUser();
@@ -541,7 +515,9 @@ class ProfileScreen extends React.Component {
                   </View>:
                   <View style={{ alignItems:'center',  width:"100%", justifyContent:"space-between", marginBottom:20, flexDirection:"row",}}>
                     <Text style={{fontSize:18, fontWeight:"bold"}}>Friends</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>{
+                      this.props.navigation.navigate("AddFriends")
+                    }}>
                       <Text style={{fontSize:18, fontWeight:"bold", color:"blue"}}>Find Friends</Text>
                     </TouchableOpacity>
                   </View>

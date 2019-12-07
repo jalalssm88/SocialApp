@@ -97,33 +97,28 @@ router.post('/login', (req, res, next)=>{
     })
 })
 
-// router.get(
-//     '/current',
-//     passport.authenticate('jwt', { session: false }),
-//     (req, res) => {
-//       res.json({
-//         id: req.user.id,
-//         name: req.user.name,
-//         email: req.user.email
-//       });
-//     }
-//   );
-
-router.get('/users', (req, res)=>{
-    User.find().then(user=>{
-        res.json({
-            user:user
+router.get('/users', (req, res, next)=>{
+   
+    User.find() 
+    .select('_id first_name last_name ')
+    .populate('profile_pictures', 'profile_picture')
+    .exec()
+    .then(doc => {
+        console.log('getting users form user and profile picturesssssss ====', doc)
+        doc.reverse();
+        if(doc){
+            res.status(200).json(doc)
+        }else{
+            res.status(404).json({
+                message: "no data found against this id",
+            })
+        }
+    })
+    .catch(err => {
+        res.status(500).json({
+            error: err
         })
     })
-})
-router.get('/userslist', (req, res)=>{
-   const data = {
-       "id":"5",
-       "name":"jalal uddin"
-   }
-    res.json({
-        user:data
-    })
-})
+});
 
 module.exports = router;

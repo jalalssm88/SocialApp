@@ -16,8 +16,8 @@ const INITIAL_STATE = {
     upload_images_data:{},
     uploadImageLoading:false,
 
-    all_images_data:[]
-
+    all_images_data:[],
+    users_data:[]
 
 };
 
@@ -106,6 +106,13 @@ function Reducer(state = INITIAL_STATE, action) {
             return{
                 ...state, all_images_data:action.payload
             }
+
+        // get users
+        case ProfileActions.GET_USERS_SUCCESS:
+            return{
+                ...state, users_data:action.payload
+            }
+        
 
         default:
             return state;

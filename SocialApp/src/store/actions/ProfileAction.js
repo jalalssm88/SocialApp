@@ -50,6 +50,11 @@ export default class Action {
     static GET_ALL_IMAGES = "GET_ALL_IMAGES"
     static GET_ALL_IMAGES_SUCCESS = "GET_ALL_IMAGES_SUCCESS"
 
+    //get users
+    static GET_USERS = "GET_USERS"
+    static GET_USERS_SUCCESS = "GET_USERS_SUCCESS"
+
+
 
 
     // upload cover picture
@@ -173,4 +178,13 @@ export default class Action {
             payload
         };
     }
+
+    // get users
+    static getUsers(payload) {
+        return {
+            type: Action.GET_USERS,
+            payload
+        };
+    }
+    
 }
