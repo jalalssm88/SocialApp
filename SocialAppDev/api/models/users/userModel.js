@@ -20,7 +20,6 @@ const UserSchema = new Schema({
     date_of_birth:{
         type:String
     },
-    user_profile:{type:mongoose.Types.ObjectId, ref:'profile_pictures'},
 });
 
 module.exports = mongoose.model('user', UserSchema);

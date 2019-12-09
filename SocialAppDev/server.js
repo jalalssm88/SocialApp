@@ -20,17 +20,17 @@ app.use('/uploads',express.static("uploads"))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// mongoose.connect('mongodb+srv://jalal:123@socialapp-wbe7k.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser:true, useUnifiedTopology:true}, ()=>{
-//     console.log('mongo db connected');
-// })
-
-
-mongoose.connect('mongodb://localhost/socialApp', {useNewUrlParser:true})
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error'))
-db.once('open', function(){
-    console.log('db connected')
+mongoose.connect('mongodb+srv://jalal:123@socialapp-wbe7k.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser:true, useUnifiedTopology:true}, ()=>{
+    console.log('mongo db connected');
 })
+
+
+// mongoose.connect('mongodb://localhost/socialApp', {useNewUrlParser:true})
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error'))
+// db.once('open', function(){
+//     console.log('db connected')
+// })
 
 // Use Routes
 

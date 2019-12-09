@@ -92,4 +92,42 @@ router.get('/get_profile_picture/:id', (req, res, next)=>{
     })
 });
 
+router.get('/get_profile_picture/', (req, res, next)=>{
+  // var query = {sort({ _id: -1 }).limit(1)}
+  profilePicture.find()
+  .select('user_id profile_picture')
+  .populate('user_id', 'first_name last_name')
+  .exec()
+  .then(doc => {
+     console.log('================================', doc)
+
+     var response = {}
+      var my_array = []
+      doc.map(item=>{
+        console.log('itemmmmm', item)
+          if(!response.hasOwnProperty(item.user_id._id)) {	
+              response[item.user_id._id] = []
+          } 
+          response[item.user_id._id] = (item)
+      })
+
+      Object.values(response).map(item => {
+          my_array.push(item)
+      })
+
+      if(doc){
+          res.status(200).json(my_array)
+      }else{
+          res.status(404).json({
+              message: "no data found against this id",
+          })
+      }
+  })
+  .catch(err => {
+      res.status(500).json({
+          error: err
+      })
+  })
+});
+
 module.exports = router;

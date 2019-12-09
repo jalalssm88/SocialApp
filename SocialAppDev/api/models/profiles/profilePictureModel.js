@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const ProfilePictureSchema = new Schema({
     user_id:{
-        type:mongoose.Types.ObjectId, ref:'users'
+        type:mongoose.Types.ObjectId, ref:'user'
     },
     profile_picture:{
         type:String

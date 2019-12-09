@@ -252,7 +252,7 @@ export function* getUsers(action) {
     let user = yield select(getUser);
     let userId = user.userId;
     let token = user.token;
-    const response = yield call(HttpService.getRequest, `user/users`, { user_id: userId, access_token: token, "content-type": "multipart/form-data"})
+    const response = yield call(HttpService.getRequest, `profile_pic/get_profile_picture`, { user_id: userId, access_token: token, "content-type": "multipart/form-data"})
     console.log(response, "get users")
     if(response && response.status == 200){
         yield put({ type: ProfileActions.GET_USERS_SUCCESS, payload:response.data})

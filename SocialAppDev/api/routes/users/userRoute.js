@@ -97,28 +97,28 @@ router.post('/login', (req, res, next)=>{
     })
 })
 
-router.get('/users', (req, res, next)=>{
+// router.get('/users', (req, res, next)=>{
    
-    User.find() 
-    .select('_id first_name last_name ')
-    .populate('profile_pictures', 'profile_picture')
-    .exec()
-    .then(doc => {
-        console.log('getting users form user and profile picturesssssss ====', doc)
-        doc.reverse();
-        if(doc){
-            res.status(200).json(doc)
-        }else{
-            res.status(404).json({
-                message: "no data found against this id",
-            })
-        }
-    })
-    .catch(err => {
-        res.status(500).json({
-            error: err
-        })
-    })
-});
+//     User.find() 
+//     .select('_id first_name last_name ')
+//     .populate('profile_pictures')
+//     .exec()
+//     .then(doc => {
+//         console.log('getting users form user and profile picturesssssss ====', doc)
+//         doc.reverse();
+//         if(doc){
+//             res.status(200).json(doc)
+//         }else{
+//             res.status(404).json({
+//                 message: "no data found against this id",
+//             })
+//         }
+//     })
+//     .catch(err => {
+//         res.status(500).json({
+//             error: err
+//         })
+//     })
+// });
 
 module.exports = router;
